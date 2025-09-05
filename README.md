@@ -35,13 +35,13 @@ float ambientStrength = 0.2f;             // 环境光强度
 glm::vec3 ambientColor = ambientStrength * m_lightColor;
 f_toyColor = ambientColor * m_toyColor;   // 最终物体颜色
 ```
-3. Shader 实现
+## 3. Shader 实现
 
 Light Shader：输出光源颜色，不受光照影响。
 
 Object Shader：根据环境光计算物体颜色输出。
 
-4. 投影与相机
+## 4. 投影与相机
 
 使用 透视投影，通过 glm::perspective 设置：
 
@@ -54,7 +54,7 @@ m_view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 ```
 通过旋转矩阵和位移矩阵调整物体和光源位置。
 
-5. 渲染流程
+## 5. 渲染流程
 
 - 绑定统一 VBO/IBO
 
