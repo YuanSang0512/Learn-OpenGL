@@ -19,142 +19,111 @@ struct vec4 {
 
 struct vertex {
     vec3 position;
-    vec4 color;
 };
 
-static vertex* CreateCube(vertex* target, glm::vec3 position, glm::vec4 color, float size)
+static vertex* CreateCube(vertex* target, float size)
 {
-	float m_x = position.x;
-	float m_y = position.y;
-	float m_z = position.z;
-	float c_R = color.r;
-	float c_M = color.g;
-	float c_B = color.b;
     float r = size / 2.0f;
     // Front face
     // 0
-    target->position = { m_x + r, m_y + r, m_z - r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = {  r,  r, -r };
     target++;
 
     // 1
-    target->position = { m_x - r, m_y + r, m_z - r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = { -r,  r, -r };
     target++;
 
     // 2
-    target->position = { m_x - r, m_y - r, m_z - r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = { -r, -r, -r };
     target++;
 
     // 3
-    target->position = { m_x + r, m_y - r, m_z - r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = {  r, -r, -r };
     target++;
 
     // Back face
     // 4
-    target->position = { m_x + r, m_y + r, m_z + r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = {  r,  r,  r };
     target++;
 
     // 5
-    target->position = { m_x - r, m_y + r, m_z + r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = { -r,  r,  r };
     target++;
 
     // 6
-    target->position = { m_x - r, m_y - r, m_z + r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = { -r, -r,  r };
     target++;
 
     // 7
-    target->position = { m_x + r, m_y - r, m_z + r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = {  r, -r,  r };
     target++;
 
     // Right face
     // 8
-    target->position = { m_x + r, m_y + r, m_z - r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = {  r,  r, -r };
     target++;
 
     // 9
-    target->position = { m_x + r, m_y + r, m_z + r }; 
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = {  r,  r,  r }; 
     target++;
 
     // 10
-    target->position = { m_x + r, m_y - r, m_z + r };    
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = {  r, -r,  r };    
     target++;
 
     // 11
-    target->position = { m_x + r, m_y - r, m_z - r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = {  r, -r, -r };
     target++;
 
     // Left face
     // 12
-    target->position = { m_x - r, m_y + r, m_z - r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = { -r,  r, -r };
     target++;
 
     // 13
-    target->position = { m_x - r, m_y + r, m_z + r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = { -r,  r,  r };
     target++;
 
     // 14
-    target->position = { m_x - r, m_y - r, m_z + r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = { -r, -r,  r };
     target++;
 
     // 15
-    target->position = { m_x - r, m_y - r, m_z - r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = { -r, -r, -r };
     target++;
 
     // Top face
     // 16
-    target->position = { m_x + r, m_y + r, m_z - r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = {  r,  r, -r };
     target++;
 
     // 17
-    target->position = { m_x - r, m_y + r, m_z - r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = { -r,  r, -r };
     target++;
 
     // 18
-    target->position = { m_x - r, m_y + r, m_z + r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = { -r,  r,  r };
     target++;
 
     // 19
-    target->position = { m_x + r, m_y + r, m_z + r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = {  r,  r,  r };
     target++;
 
     // Bottom face
     // 20
-    target->position = { m_x + r, m_y - r, m_z - r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = {  r, -r, -r };
     target++;
 
     // 21
-    target->position = { m_x - r, m_y - r, m_z - r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = { -r, -r, -r };
     target++;
 
     // 22
-    target->position = { m_x - r, m_y - r, m_z + r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = { -r, -r,  r };
     target++;
 
     // 23
-    target->position = { m_x + r, m_y - r, m_z + r };
-    target->color = { c_R, c_M, c_B, 1.0f };
+    target->position = {  r, -r,  r };
     target++;
 
     return target;
@@ -197,13 +166,13 @@ static unsigned int* CreateCubeIndices(unsigned int* indices, const int MaxIndex
 
 namespace test
 {
-    const int MaxCubeCount = 2;
+    const int MaxCubeCount = 1;
     const int MaxVertexCount = MaxCubeCount * 24;
     const int MaxIndexCount = MaxCubeCount * 36;
 
     LightTest::LightTest()
 		: cameraPos(0, 0, 3), rot_x(0), rot_y(0), rot_z(0), 
-		positionA(0, 0, 0), positionB(300, 300, 0), m_lightColor(1, 1, 1, 1), m_toyColor(1, 0.5, 0, 1)
+        lightPos(0, 0, 0), objectPos(300, 300, 0), m_lightColor(1, 1, 1), m_toyColor(1, 0.5, 0)
     {
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_BLEND));//启用混合
@@ -211,12 +180,19 @@ namespace test
         unsigned int* indices = NULL;
         indices = CreateCubeIndices(indices, MaxIndexCount);
 
-        m_VAO = std::make_unique<VertexArray>();
-        m_VertexBuffer = std::make_unique<VertexBuffer>(nullptr, MaxVertexCount * sizeof(vertex), true);//坐标缓冲对象
+        m_VBO = std::make_unique<VertexBuffer>(nullptr, MaxVertexCount * sizeof(vertex), true);
         m_IndexBuffer = std::make_unique<IndexBuffer>(indices, MaxIndexCount);
 
-        m_Shader = std::make_unique<Shader>("res/shaders/LightTest.shader");
-        m_Shader->Bind();
+        m_LightVAO = std::make_unique<VertexArray>();
+        m_LightShader = std::make_unique<Shader>("res/shaders/LightCube.shader");
+        
+        m_ObjectVAO = std::make_unique<VertexArray>();
+        m_ObjectShader = std::make_unique<Shader>("res/shaders/Object.shader");
+        
+        VertexBufferLayout layout;
+        layout.Push<float>(3);//Position
+        m_LightVAO->AddBuffer(*m_VBO, layout);
+        m_ObjectVAO->AddBuffer(*m_VBO, layout);
     }
 
     LightTest::~LightTest()
@@ -229,58 +205,63 @@ namespace test
         std::array<vertex, MaxVertexCount> vertices;
         vertex* buffer = vertices.data();
 
-		glm::vec4 lightColor = glm::vec4(m_lightColor.x, m_lightColor.y, m_lightColor.z, m_lightColor.w);
-		glm::vec4 toyColor = glm::vec4(m_toyColor.x, m_toyColor.y, m_toyColor.z, m_toyColor.w);
-        toyColor *= lightColor;
-        buffer = CreateCube(buffer, positionA, lightColor, 200.0f);
-        buffer = CreateCube(buffer, positionB, toyColor, 300.0f);
-
-        m_VertexBuffer->Bind();
+        buffer = CreateCube(buffer, 200.0f);
+        m_VBO->Bind();
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices.data());
-
-        VertexBufferLayout layout;
-        layout.Push<float>(3);//Position
-        layout.Push<float>(4);//Color
-        m_VAO->AddBuffer(*m_VertexBuffer, layout);
     }
 
     void LightTest::OnRender()
     {
         GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
-        Renderer render;
-
-        m_proj = glm::ortho(-900.0f, 900.0f, -900.0f, 900.0f, -900.0f, 900.0f);
-
-        //旋转摄像机
-        //m_view = glm::rotate(glm::mat4(1.0f), glm::radians(rot_x), glm::vec3(1, 0, 0));
-        //m_view = glm::rotate(m_view, glm::radians(rot_y), glm::vec3(0, 1, 0));
-        //m_view = glm::rotate(m_view, glm::radians(rot_z), glm::vec3(0, 0, 1));
-        //float radius = 10.0f;
-        //float camX = sin(glfwGetTime()) * radius;
-        //float camZ = cos(glfwGetTime()) * radius;
 
         cameraPos = ProcessInput(cameraPos, 8.0f);
+
+        float fov = glm::radians(80.0f); // 视野角度
+        float aspect = (float)800 / 800; // 屏幕宽高比
+        float nearPlane = 0.1f;
+        float farPlane = 1000.0f;
+        m_proj = glm::perspective(fov, aspect, nearPlane, farPlane);
+
+        //m_proj = glm::ortho(-1500.0f, 1500.0f, -1500.0f, 1500.0f, -900.0f, 900.0f);
         glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
         glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
         m_view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+        m_view = glm::rotate(m_view, glm::radians(rot_y), glm::vec3(0, 1, 0));
+		m_model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
-        glm::mat4 m_model = glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-        m_model = glm::translate(m_model, glm::vec3(0, 0, 0));
-        glm::mat4 mvp = m_proj * m_view * m_model;
-        m_Shader->SetUniformMat4f("u_MVP", mvp);
+        Renderer render;
+        {
+            m_model = glm::translate(glm::mat4(1.0f), lightPos);
+            m_mvp = m_proj * m_view * m_model;
 
-        render.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
+            m_LightShader->Bind();
+            m_LightShader->SetUniformMat4f("u_MVP", m_mvp);
+            m_LightShader->SetUniformVec4f("u_Color", glm::vec4(m_lightColor, 1.0f));
+            render.Draw(*m_LightVAO, *m_IndexBuffer, *m_LightShader);
+        }
+        {
+			m_model = glm::translate(glm::mat4(1.0f), objectPos);
+            m_mvp = m_proj * m_view * m_model;
+            float ambientStrength = 0.2f;
+            glm::vec3 ambientColor = ambientStrength * m_lightColor;
+            f_toyColor = ambientColor * m_toyColor;
+
+            m_ObjectShader->Bind();
+            m_ObjectShader->SetUniformMat4f("u_MVP", m_mvp);
+            m_LightShader->SetUniformVec4f("u_Color", glm::vec4(f_toyColor, 1.0f));
+            render.Draw(*m_ObjectVAO, *m_IndexBuffer, *m_ObjectShader);
+        }
     }
 
     void LightTest::OnImGuiRender()
     {
-        ImGui::SliderFloat3("positionA", &positionA.x, -900.0f, 900.0f);
-        ImGui::SliderFloat3("positionB", &positionB.x, -900.0f, 900.0f);
-		ImGui::SliderFloat4("m_lightColor", &m_lightColor.x, 0.0f, 1.0f);
-		ImGui::SliderFloat4("m_toyColor", &m_toyColor.x, 0.0f, 1.0f);
+        ImGui::SliderFloat3("lightPos", &lightPos.x, -900.0f, 900.0f);
+        ImGui::SliderFloat3("objectPos", &objectPos.x, -900.0f, 900.0f);
+		ImGui::SliderFloat3("m_lightColor", &m_lightColor.x, 0.0f, 1.0f);
+		ImGui::SliderFloat3("m_toyColor", &m_toyColor.x, 0.0f, 1.0f);
         //ImGui::SliderFloat("rot_x", &rot_x, -180.0f, 180.0f);
-        //ImGui::SliderFloat("rot_y", &rot_y, -180.0f, 180.0f);
+        ImGui::SliderFloat("rot_y", &rot_y, -180.0f, 180.0f);
         //ImGui::SliderFloat("rot_z", &rot_z, -180.0f, 180.0f);
     }
 }

@@ -24,14 +24,14 @@ namespace test
 		void OnImGuiRender() override;
 
 	private:
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<VertexArray> m_VAO;
+		std::unique_ptr<VertexBuffer> m_VBO;
+		std::unique_ptr<VertexArray> m_LightVAO, m_ObjectVAO;
 		std::unique_ptr<IndexBuffer> m_IndexBuffer;
-		std::unique_ptr<Shader> m_Shader;
+		std::unique_ptr<Shader> m_LightShader, m_ObjectShader;
 
-		glm::mat4 m_proj, m_view;
-		glm::vec4 m_lightColor, m_toyColor;
-		glm::vec3 positionA, positionB, cameraPos;
+		glm::mat4 m_proj, m_view, m_model, m_mvp;
+		glm::vec3 m_lightColor, m_toyColor, f_toyColor;
+		glm::vec3 lightPos, objectPos, cameraPos;
 		float rot_x, rot_y, rot_z;
 	};
 }

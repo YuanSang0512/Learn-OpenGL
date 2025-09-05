@@ -167,8 +167,9 @@
     <None Include="res\shaders\CameraTest.shader" />
     <None Include="res\shaders\ColorfulCube.shader" />
     <None Include="res\shaders\DynamicVBO.shader" />
-    <None Include="res\shaders\LightTest.shader" />
+    <None Include="res\shaders\LightCube.shader" />
     <None Include="res\shaders\MultiTexture.shader" />
+    <None Include="res\shaders\Object.shader" />
     <None Include="res\shaders\VertexIndex.shader" />
   </ItemGroup>
   <ItemGroup>

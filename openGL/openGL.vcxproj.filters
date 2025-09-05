@@ -89,7 +89,8 @@
     <None Include="res\shaders\DynamicVBO.shader" />
     <None Include="res\shaders\VertexIndex.shader" />
     <None Include="res\shaders\CameraTest.shader" />
-    <None Include="res\shaders\LightTest.shader" />
+    <None Include="res\shaders\LightCube.shader" />
+    <None Include="res\shaders\Object.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
