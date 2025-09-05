@@ -29,9 +29,9 @@ namespace test
 		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 		std::unique_ptr<Shader> m_LightShader, m_ObjectShader;
 
-		glm::mat4 m_proj, m_view, m_model, m_mvp;
+		glm::mat4 m_proj, m_view, m_model;
 		glm::vec3 m_lightColor, m_toyColor, f_toyColor;
 		glm::vec3 lightPos, objectPos, cameraPos;
-		float rot_x, rot_y, rot_z;
+		float rot_x, rot_y, rot_z, specularStrength, ambientStrength;
 	};
 }

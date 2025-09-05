@@ -3,13 +3,16 @@
 
 layout (location = 0) in vec4 position;
 
-out vec4 m_Color;
-uniform mat4 u_MVP;
-uniform vec4 u_Color;
+out vec3 m_Color;
+
+uniform mat4 u_Projection;
+uniform mat4 u_View;
+uniform mat4 u_Model;
+uniform vec3 u_Color;
 
 void main()
 {
-    gl_Position = u_MVP * position;
+    gl_Position = u_Projection * u_View * u_Model * position;
     m_Color = u_Color;
 }
 
@@ -18,9 +21,9 @@ void main()
 
 layout (location = 0) out vec4 color;
 
-in vec4 m_Color;
+in vec3 m_Color;
 
 void main()
 {
-    color = m_Color;
+    color = vec4(m_Color, 1.0);
 }
