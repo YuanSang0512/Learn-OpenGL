@@ -114,9 +114,11 @@ namespace test
     const int MaxIndexCount = MaxCubeCount * 36;
 
     LightTest::LightTest()
-		: cameraPos(0, 0, 600), rot_x(0), rot_y(0), rot_z(0), 
-        lightPos(0, 0, 300), objectPos(0, 0, 0), m_lightColor(1, 1, 1), m_toyColor(1, 0.5, 0),
-        ambientStrength(0.2f), specularStrength(0.5f)
+		: cameraPos(0, 0, 600), rot(0, 45.0, 45.0), lightPos(0, 0, 300), 
+        objectPos(0, 0, 0), m_lightColor(1, 1, 1), m_toyColor(1, 0.5, 0),
+		ambientColor(0.0215, 0.1745, 0.0215), diffuseColor(0.07568, 0.61424, 0.07568), specularColor(0.633, 0.727811, 0.633),
+		ambientLight(0.2, 0.2, 0.2), diffuseLight(0.5, 0.5, 0.5), specularLight(1.0, 1.0, 1.0),
+        shininess(32)
     {
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_DEPTH_TEST));
@@ -174,23 +176,20 @@ namespace test
         glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
         glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
         m_view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-        m_view = glm::rotate(m_view, glm::radians(rot_x), glm::vec3(1, 0, 0));
-        m_view = glm::rotate(m_view, glm::radians(rot_y), glm::vec3(0, 1, 0));
-        m_view = glm::rotate(m_view, glm::radians(rot_z), glm::vec3(0, 0, 1));
+        m_view = glm::rotate(m_view, glm::radians(rot.x), glm::vec3(1, 0, 0));
+        m_view = glm::rotate(m_view, glm::radians(rot.y), glm::vec3(0, 1, 0));
+        m_view = glm::rotate(m_view, glm::radians(rot.z), glm::vec3(0, 0, 1));
 
         Renderer render;
         {
-            m_model = glm::translate(glm::mat4(1.0f), lightPos);
-
             float radius = 300.0f;
             float speed = 1.0f; // 旋转速度倍数
             float theta = glfwGetTime() * speed;
 
             lightPos.x = cos(theta) * radius;
-            lightPos.y = 0.0f;        // 如果想上下摆动可以加 sin(glfwGetTime() * 0.5f) * 高度
             lightPos.z = sin(theta) * radius;
-
-
+			//std::cout << lightPos.x << "," << lightPos.y << "," << lightPos.z << std::endl;
+			m_model = glm::translate(glm::mat4(1.0f), lightPos);
             m_model = glm::scale(m_model, glm::vec3(0.05f));
 
             m_LightShader->Bind();
@@ -202,19 +201,26 @@ namespace test
         }
         {
 			m_model = glm::translate(glm::mat4(1.0f), objectPos);
-			//m_model = glm::rotate(m_model, glm::radians(rot_x), glm::vec3(1, 0, 0));
-			//rot_x += 0.5f;
+			m_model = glm::rotate(m_model, glm::radians(rx), glm::vec3(1, 0, 0));
+			rx += 0.5f;
 
             m_ObjectShader->Bind();
             m_ObjectShader->SetUniformMat4f("u_Projection", m_proj);
             m_ObjectShader->SetUniformMat4f("u_View", m_view);
             m_ObjectShader->SetUniformMat4f("u_Model", m_model);
+
+            m_ObjectShader->SetUniformVec3f("u_material.ambient", ambientColor);
+            m_ObjectShader->SetUniformVec3f("u_material.diffuse", diffuseColor);
+            m_ObjectShader->SetUniformVec3f("u_material.specular", specularColor);
+            m_ObjectShader->SetUniform1f("u_material.shininess", shininess);
+
             m_ObjectShader->SetUniformVec3f("u_Color", m_toyColor);
             m_ObjectShader->SetUniformVec3f("u_lightColor", m_lightColor);
-            m_ObjectShader->SetUniformVec3f("u_LightPos", lightPos);
-			m_ObjectShader->SetUniform1f("u_ambientStrength", ambientStrength);
+            m_ObjectShader->SetUniformVec3f("u_Light.lightPos", lightPos);
+            m_ObjectShader->SetUniformVec3f("u_Light.ambient", ambientLight);
+            m_ObjectShader->SetUniformVec3f("u_Light.diffuse", diffuseLight);
+            m_ObjectShader->SetUniformVec3f("u_Light.specular", specularLight);
             m_ObjectShader->SetUniformVec3f("u_CamPos", cameraPos);
-            m_ObjectShader->SetUniform1f("u_specularStrength", specularStrength);
 
             render.Draw(*m_ObjectVAO, *m_IndexBuffer, *m_ObjectShader);
         }
@@ -222,14 +228,26 @@ namespace test
 
     void LightTest::OnImGuiRender()
     {
+        ImGui::Text("Transformations");
+        ImGui::SliderFloat3("rot", &rot.x, -180.0f, 180.0f);
         ImGui::SliderFloat3("lightPos", &lightPos.x, -900.0f, 900.0f);
         ImGui::SliderFloat3("objectPos", &objectPos.x, -900.0f, 900.0f);
+        ImGui::Separator();
+
+        ImGui::Text("Light/Object Color");
 		ImGui::SliderFloat3("m_lightColor", &m_lightColor.x, 0.0f, 1.0f);
-		ImGui::SliderFloat3("m_toyColor", &m_toyColor.x, 0.0f, 1.0f);
-        ImGui::SliderFloat("rot_x", &rot_x, -180.0f, 180.0f);
-        ImGui::SliderFloat("rot_y", &rot_y, -180.0f, 180.0f);
-        ImGui::SliderFloat("rot_z", &rot_z, -180.0f, 180.0f);
-        ImGui::SliderFloat("ambientStrength", &ambientStrength, 0.0f, 1.0f);
-        ImGui::SliderFloat("specularStrength", &specularStrength, 0.0f, 1.0f);
+        ImGui::SliderFloat3("m_toyColor", &m_toyColor.x, 0.0f, 1.0f);
+        ImGui::Separator();
+
+		ImGui::Text("Object Material");
+        ImGui::SliderFloat3("ambientColor", &ambientColor.x, 0.0f, 1.0f);
+        ImGui::SliderFloat3("diffuseColor", &diffuseColor.x, 0.0f, 1.0f);
+        ImGui::SliderFloat3("specularColor", &specularColor.x, 0.0f, 1.0f);
+        ImGui::SliderFloat("shininess", &shininess, 0.0f, 256.0f);
+
+		ImGui::Text("Light Strength");
+        ImGui::SliderFloat3("ambientLight", &ambientLight.x, 0.0f, 1.0f);
+        ImGui::SliderFloat3("diffuseLight", &diffuseLight.x, 0.0f, 1.0f);
+		ImGui::SliderFloat3("specularLight", &specularLight.x, 0.0f, 1.0f);
     }
 }

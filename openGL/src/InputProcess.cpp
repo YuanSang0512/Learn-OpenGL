@@ -2,6 +2,8 @@
 
 KeyState keyState;
 
+
+
 glm::vec3 ProcessInput(glm::vec3 cameraPos, float cameraSpeed)
 {
     glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);

@@ -31,7 +31,9 @@ namespace test
 
 		glm::mat4 m_proj, m_view, m_model;
 		glm::vec3 m_lightColor, m_toyColor, f_toyColor;
-		glm::vec3 lightPos, objectPos, cameraPos;
-		float rot_x, rot_y, rot_z, specularStrength, ambientStrength;
+		glm::vec3 lightPos, objectPos, cameraPos, rot;
+		glm::vec3 ambientColor, diffuseColor, specularColor;//控制物体材质
+		glm::vec3 ambientLight, diffuseLight, specularLight;//控制光照强度
+		float shininess, rx = 0;
 	};
 }
