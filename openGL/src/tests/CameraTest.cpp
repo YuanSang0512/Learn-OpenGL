@@ -318,7 +318,6 @@ namespace test
         //float camX = sin(glfwGetTime()) * radius;
         //float camZ = cos(glfwGetTime()) * radius;
 
-		cameraPos = ProcessInput(cameraPos, 8.0f);
         glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
         glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
         m_view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);

@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <iostream>
 
+
 struct KeyState {
     bool w = false;
     bool a = false;
@@ -11,8 +12,16 @@ struct KeyState {
     bool d = false;
 	bool shift = false;
 	bool space = false;
+	bool table = false;
+};
+
+struct MouseState {
+    double x = 0.0;
+    double y = 0.0;
+	double diff_x = 0.0;
+	double diff_y = 0.0;
+    bool mounseControl = false;
 };
 
 extern KeyState keyState;
-
-glm::vec3 ProcessInput(glm::vec3 cameraPos, float cameraSpeed);
+extern MouseState mouseState;

@@ -21,6 +21,7 @@ struct vertex {
     vec3 position;
 	vec3 normal;
 };
+float radius = 300.0f;
 
 static vertex* CreateCube(vertex* target, float size)
 {
@@ -114,8 +115,7 @@ namespace test
     const int MaxIndexCount = MaxCubeCount * 36;
 
     LightTest::LightTest()
-		: cameraPos(0, 0, 600), rot(0, 45.0, 45.0), lightPos(0, 0, 300), 
-        objectPos(0, 0, 0), m_lightColor(1, 1, 1), m_toyColor(1, 0.5, 0),
+		:lightPos(0, 0, 300), objectPos(0, 0, 0), m_lightColor(1, 1, 1), m_toyColor(1, 0.5, 0),
 		ambientColor(0.0215, 0.1745, 0.0215), diffuseColor(0.07568, 0.61424, 0.07568), specularColor(0.633, 0.727811, 0.633),
 		ambientLight(0.2, 0.2, 0.2), diffuseLight(0.5, 0.5, 0.5), specularLight(1.0, 1.0, 1.0),
         shininess(32)
@@ -151,6 +151,8 @@ namespace test
 
     void LightTest::OnUpdate(float deltaTime)
     {
+        cam.CameraUpdate();
+
         std::array<vertex, MaxVertexCount> vertices;
         vertex* buffer = vertices.data();
 
@@ -164,25 +166,15 @@ namespace test
         GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
         GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
-        cameraPos = ProcessInput(cameraPos, 8.0f);
-
         float fov = glm::radians(80.0f); // 视野角度
         float aspect = (float)800 / 800; // 屏幕宽高比
         float nearPlane = 0.1f;
         float farPlane = 1500.0f;
-        m_proj = glm::perspective(fov, aspect, nearPlane, farPlane);
-        //m_proj = glm::ortho(-1500.0f, 1500.0f, -1500.0f, 1500.0f, -900.0f, 900.0f);
-        
-        glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-        glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-        m_view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-        m_view = glm::rotate(m_view, glm::radians(rot.x), glm::vec3(1, 0, 0));
-        m_view = glm::rotate(m_view, glm::radians(rot.y), glm::vec3(0, 1, 0));
-        m_view = glm::rotate(m_view, glm::radians(rot.z), glm::vec3(0, 0, 1));
+		m_proj = cam.GetProjectionMatrix(aspect, nearPlane, farPlane);
+        m_view = cam.GetViewMatrix();
 
         Renderer render;
         {
-            float radius = 300.0f;
             float speed = 1.0f; // 旋转速度倍数
             float theta = glfwGetTime() * speed;
 
@@ -214,22 +206,21 @@ namespace test
             m_ObjectShader->SetUniformVec3f("u_material.specular", specularColor);
             m_ObjectShader->SetUniform1f("u_material.shininess", shininess);
 
-            m_ObjectShader->SetUniformVec3f("u_Color", m_toyColor);
-            m_ObjectShader->SetUniformVec3f("u_lightColor", m_lightColor);
             m_ObjectShader->SetUniformVec3f("u_Light.lightPos", lightPos);
             m_ObjectShader->SetUniformVec3f("u_Light.ambient", ambientLight);
             m_ObjectShader->SetUniformVec3f("u_Light.diffuse", diffuseLight);
             m_ObjectShader->SetUniformVec3f("u_Light.specular", specularLight);
-            m_ObjectShader->SetUniformVec3f("u_CamPos", cameraPos);
 
+            m_ObjectShader->SetUniformVec3f("u_CamPos", cam.GetPosition());            
             render.Draw(*m_ObjectVAO, *m_IndexBuffer, *m_ObjectShader);
         }
+
     }
 
     void LightTest::OnImGuiRender()
     {
         ImGui::Text("Transformations");
-        ImGui::SliderFloat3("rot", &rot.x, -180.0f, 180.0f);
+        ImGui::SliderFloat("radius", &radius, 0.0f, 500.0f);
         ImGui::SliderFloat3("lightPos", &lightPos.x, -900.0f, 900.0f);
         ImGui::SliderFloat3("objectPos", &objectPos.x, -900.0f, 900.0f);
         ImGui::Separator();

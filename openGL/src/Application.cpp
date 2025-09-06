@@ -26,7 +26,14 @@
 #include "vendor/imgui/imgui_impl_glfw_gl3.h"
 using namespace std;
 
-
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
+    //std::cout << "Mouse moved to (" << xpos << ", " << ypos << ")" << std::endl;
+    //std::cout << mouseState.diff_x << ", " << mouseState.diff_y << std::endl;
+	mouseState.diff_x = xpos - mouseState.x;
+	mouseState.diff_y = ypos - mouseState.y;
+	mouseState.x = xpos;
+	mouseState.y = ypos;
+}
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -45,6 +52,20 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		keyState.shift = (action != GLFW_RELEASE);
     if(key == GLFW_KEY_SPACE)
 		keyState.space = (action != GLFW_RELEASE);
+    if (key == GLFW_KEY_TAB && action == GLFW_PRESS)
+    {
+        keyState.table = !keyState.table;
+        if (keyState.table) {
+            // 启用鼠标回调函数
+            glfwSetCursorPosCallback(window, cursor_position_callback);
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        }
+        else {
+            // 禁用鼠标回调函数
+            glfwSetCursorPosCallback(window, nullptr);
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        }
+    }
 }
 
 int main(void)
@@ -90,7 +111,9 @@ int main(void)
         testMenu->RegisterTest<test::CameraTest>("CameraTest");
         testMenu->RegisterTest<test::LightTest>("LightTest");
 
+        //回调函数
         glfwSetKeyCallback(window, key_callback);
+        glfwSetCursorPosCallback(window, cursor_position_callback);
 
         while (!glfwWindowShouldClose(window))
         {

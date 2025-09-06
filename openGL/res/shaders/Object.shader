@@ -32,33 +32,29 @@ struct Material{
 uniform Material u_material;
 
 struct Light{
-    vec3 lightPos;
+    vec3 lightPos;//光源位置
 
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
+    vec3 ambient;//环境光照
+    vec3 diffuse;//漫反射
+    vec3 specular;//镜面反射
 };
-uniform Light u_Light;
-
-uniform vec3 u_Color;
-
-uniform vec3 u_lightColor;
 
 uniform vec3 u_CamPos;
+uniform Light u_Light;
 
 in vec3 m_FragPos;
 in vec3 m_Normal;
 
 void main()
 {
-    vec3 norm = normalize(m_Normal);
     // --- ambient 环境光 ---
-    vec3 f_ambient = u_Light.ambient * u_material.ambient * u_lightColor;
+    vec3 f_ambient = u_Light.ambient * u_material.ambient;
 
     // --- diffuse 漫反射 ---
+    vec3 norm = normalize(m_Normal);
     vec3 lightDir = normalize(u_Light.lightPos - m_FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
-    vec3 f_diffuse = u_Light.diffuse * u_lightColor * (diff * u_material.diffuse);
+    vec3 f_diffuse = u_Light.diffuse * (diff * u_material.diffuse);
 
     // --- specular 镜面反射 (Blinn-Phong) ---
     vec3 f_specular = vec3(0.0);
@@ -67,13 +63,10 @@ void main()
         vec3 viewDir = normalize(u_CamPos - m_FragPos);
         vec3 halfwayDir = normalize(lightDir + viewDir); // Blinn-Phong 使用半程向量
         float spec = pow(max(dot(norm, halfwayDir), 0.0), u_material.shininess);
-        f_specular = u_Light.specular * u_material.specular * spec * u_lightColor;
+        f_specular = u_Light.specular * u_material.specular * spec;
     }
-    //f_specular = vec3(0.0);
-
 
     // --- 最终颜色 ---
-    vec3 result = f_ambient * u_Color + f_diffuse * u_Color + f_specular;
-    //vec3 result = f_ambient + f_diffuse + f_specular;
+    vec3 result = f_ambient + f_diffuse + f_specular;
     color = vec4(result, 1.0);
 }
