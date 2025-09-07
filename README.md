@@ -134,7 +134,56 @@
 
 ---
 
+## 2025/9/7 更新说明
+本次更新完成了 **Mesh / Model 类的实现**，并成功接入 **Assimp 库** 实现模型导入与渲染。由于 `Model` 与 `Mesh` 类已经完整接管了纹理加载流程，之前的 `Texture` 类基本弃用。
+
+---
+
+## ✨ 更新内容
+
+### 1. `Mesh` 类
+- 新增 `Mesh` 构造函数，接收 **顶点 (Vertex)**、**索引 (Index)** 和 **纹理 (TextureInfo)** 数据。  
+- `Draw()` 方法：
+  - 支持多纹理绑定（`texture_diffuseN`、`texture_specularN`）。
+  - 在绘制前自动激活纹理单元并传递 `Shader` uniform。
+  - 使用 `Renderer` 渲染绑定的 `VAO` / `EBO`。
+- `setupMesh()` 方法：
+  - 使用 `VertexArray` / `VertexBuffer` / `IndexBuffer` 封装网格数据。
+  - 定义了 **顶点属性布局**：
+    - 位置 (vec3)  
+    - 法线 (vec3)  
+    - 纹理坐标 (vec2)
+
+---
+
+### 2. `Model` 类
+- `loadModel(path)`：使用 **Assimp** 导入模型文件（支持三角化、纹理坐标翻转）。
+- `processNode(node, scene)`：递归解析 **节点及子节点**，并存储对应 `Mesh`。
+- `processMesh(mesh, scene)`：
+  - 提取顶点数据：`Position`、`Normal`、`TexCoord`。
+  - 生成索引缓冲。
+  - 解析材质，加载 `Diffuse` / `Specular` 贴图。
+- `loadMaterialTextures`：材质贴图加载与缓存，避免重复读取。
+- `TextureFromFile`：使用 `stb_image` 读取纹理并生成 OpenGL 纹理对象，支持 `RGB` / `RGBA`。
+
+---
+
+### 3. `Texture` 类状态
+- `Texture` 类已 **基本弃用**，不再直接使用。
+- 纹理加载逻辑由 `Model` 内的 `TextureFromFile` 与 `TextureInfo` 接管。
+
+---
+
+## ✅ 效果与意义
+- 支持导入 **复杂模型**（如 `.obj`、`.fbx` 等）。
+- **自动加载网格与贴图**，无需手工指定。
+- 渲染流程更加模块化：`Model` → `Mesh` → OpenGL。
+- 后续可以轻松扩展 **多材质、多网格模型** 渲染。
+
+---
+
 ## 📝 后续改进方向
-1. **PBR 光照模型**，尝试 Cook-Torrance 支持 roughness/metallic。
-2. **多光源支持**，扩展 Shader 输入支持点光源、平行光、聚光灯。
-3. **材质系统扩展**，支持外部材质库或 PBR 参数。
+1. 引入 **法线贴图 / 高度贴图** 支持，增强材质细节。  
+2. 优化 **纹理缓存管理**，避免重复加载同一贴图文件。  
+3. 与 **相机 / 光照系统** 深度整合，实现更复杂的场景渲染。  
+4. 探索 **PBR 光照模型**，支持 roughness / metallic 参数。
