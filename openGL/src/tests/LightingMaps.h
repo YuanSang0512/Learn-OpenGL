@@ -14,11 +14,11 @@
 
 namespace test
 {
-	class LightTest : public Test
+	class LightingMaps : public Test
 	{
 	public:
-		LightTest();
-		~LightTest();
+		LightingMaps();
+		~LightingMaps();
 
 		void OnUpdate(float deltaTime) override;
 		void OnRender() override;
@@ -30,11 +30,13 @@ namespace test
 		std::unique_ptr<VertexArray> m_LightVAO, m_ObjectVAO;
 		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 		std::unique_ptr<Shader> m_LightShader, m_ObjectShader;
+		std::unique_ptr<Texture> m_Texture, m_Texture_Specular;
+
 
 		glm::mat4 m_proj, m_view, m_model;
 		glm::vec3 m_lightColor, m_toyColor, f_toyColor;
 		glm::vec3 lightPos, objectPos, cameraPos;
-		glm::vec3 ambientColor, diffuseColor, specularColor;//控制物体材质
+		glm::vec3 ambientColor, specularColor;//控制物体材质,漫反射由texture控制
 		glm::vec3 ambientLight, diffuseLight, specularLight;//控制光照强度
 		float shininess, rx = 0, radius = 300.0f;
 	};

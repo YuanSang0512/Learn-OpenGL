@@ -310,14 +310,6 @@ namespace test
 
         m_proj = glm::ortho(-900.0f, 900.0f, -900.0f, 900.0f, -900.0f, 900.0f);
 
-		//Ðý×ªÉãÏñ»ú
-        //m_view = glm::rotate(glm::mat4(1.0f), glm::radians(rot_x), glm::vec3(1, 0, 0));
-        //m_view = glm::rotate(m_view, glm::radians(rot_y), glm::vec3(0, 1, 0));
-        //m_view = glm::rotate(m_view, glm::radians(rot_z), glm::vec3(0, 0, 1));
-        //float radius = 10.0f;
-        //float camX = sin(glfwGetTime()) * radius;
-        //float camZ = cos(glfwGetTime()) * radius;
-
         glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
         glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
         m_view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);

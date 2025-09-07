@@ -33,7 +33,8 @@ private:
 
 	float yaw;//水平角
 	float pitch;//垂直角
+	float zoom;//视野
 	float movementSpeed;
 	float mouseSensitivity;//鼠标灵敏度
-	float zoom;//视野
+	float zoomSensitivity;//滚轮灵敏度
 };

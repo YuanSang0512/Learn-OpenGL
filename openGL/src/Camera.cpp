@@ -2,7 +2,7 @@
 
 Camera::Camera(glm::vec3 pos, float yaw , float pitch,
 	glm::vec3 front, glm::vec3 up, glm::vec3 right)
-	: movementSpeed(4.0f), mouseSensitivity(0.2f), zoom(70.0f)
+	: zoom(70.0f), movementSpeed(4.0f), mouseSensitivity(0.2f), zoomSensitivity(3.0f)
 {
 	position = pos;
 	this->yaw = yaw;
@@ -36,9 +36,11 @@ void Camera::CameraUpdate(float deltaTime)
 		mouseState.diff_x = 0.0;
 		mouseState.diff_y = 0.0;
 	}
-	
-	//std::cout << "Camera Front: (" << front.x << ", " << front.y << ", " << front.z << ")\n";
-	//std::cout << "Camera Position: (" << position.x << ", " << position.y << ", " << position.z << ")\n";
+
+	zoom -= mouseState.scroll_y * zoomSensitivity;
+	mouseState.scroll_y = 0.0;
+	if (zoom < 10.0f) zoom = 10.0f;
+	if (zoom > 80.0f) zoom = 80.0f;
 
 	if (keyState.w) {
 		position += movementSpeed * front;

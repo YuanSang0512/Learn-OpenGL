@@ -20,6 +20,7 @@ struct MouseState {
     double y = 0.0;
 	double diff_x = 0.0;
 	double diff_y = 0.0;
+	double scroll_y = 0.0;
     bool mounseControl = false;
 };
 

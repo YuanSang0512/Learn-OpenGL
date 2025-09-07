@@ -147,6 +147,7 @@
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\tests\CameraTest.cpp" />
     <ClCompile Include="src\tests\DynamicVBO.cpp" />
+    <ClCompile Include="src\tests\LightingMaps.cpp" />
     <ClCompile Include="src\tests\LightTest.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\TestClearColor.cpp" />
@@ -171,6 +172,7 @@
     <None Include="res\shaders\LightCube.shader" />
     <None Include="res\shaders\MultiTexture.shader" />
     <None Include="res\shaders\Object.shader" />
+    <None Include="res\shaders\LightingMaps.shader" />
     <None Include="res\shaders\VertexIndex.shader" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +183,7 @@
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\tests\CameraTest.h" />
     <ClInclude Include="src\tests\DynamicVBO.h" />
+    <ClInclude Include="src\tests\LightingMaps.h" />
     <ClInclude Include="src\tests\LightTest.h" />
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\TestClearColor.h" />
@@ -202,6 +205,8 @@
     <ClInclude Include="src\VertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\textures\container2.png" />
+    <Image Include="res\textures\container2_specular.png" />
     <Image Include="res\textures\earth.png" />
     <Image Include="res\textures\maodie.jpg" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-#include "LightTest.h"
+#include "LightingMaps.h"
 
 #include "Renderer.h"
 #include "InputProcess.h"
@@ -8,6 +8,10 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "GLFW/glfw3.h"
 #include <array>
+
+struct vec2 {
+    float x, y;
+};
 
 struct vec3 {
     float x, y, z;
@@ -19,54 +23,61 @@ struct vec4 {
 
 struct vertex {
     vec3 position;
-	vec3 normal;
+    vec3 normal;
+	vec2 texCoord;
 };
 
 static vertex* CreateCube(vertex* target, float size)
 {
     float r = size / 2.0f;
 
+    // 常用纹理坐标
+    vec2 uv0 = { 0.0f, 0.0f };
+    vec2 uv1 = { 1.0f, 0.0f };
+    vec2 uv2 = { 1.0f, 1.0f };
+    vec2 uv3 = { 0.0f, 1.0f };
+
     // Front face (+Z)
     vec3 frontNormal = { 0.0f, 0.0f, -1.0f };
-    target->position = { r,  r, -r }; target->normal = frontNormal; target++;
-    target->position = { -r,  r, -r }; target->normal = frontNormal; target++;
-    target->position = { -r, -r, -r }; target->normal = frontNormal; target++;
-    target->position = { r, -r, -r }; target->normal = frontNormal; target++;
+    target->position = { r,  r, -r }; target->normal = frontNormal; target->texCoord = uv2; target++;
+    target->position = { -r,  r, -r }; target->normal = frontNormal; target->texCoord = uv3; target++;
+    target->position = { -r, -r, -r }; target->normal = frontNormal; target->texCoord = uv0; target++;
+    target->position = { r, -r, -r }; target->normal = frontNormal; target->texCoord = uv1; target++;
 
     // Back face (-Z)
     vec3 backNormal = { 0.0f, 0.0f, 1.0f };
-    target->position = { r,  r,  r }; target->normal = backNormal; target++;
-    target->position = { -r,  r,  r }; target->normal = backNormal; target++;
-    target->position = { -r, -r,  r }; target->normal = backNormal; target++;
-    target->position = { r, -r,  r }; target->normal = backNormal; target++;
+    target->position = { r,  r,  r }; target->normal = backNormal; target->texCoord = uv2; target++;
+    target->position = { -r,  r,  r }; target->normal = backNormal; target->texCoord = uv3; target++;
+    target->position = { -r, -r,  r }; target->normal = backNormal; target->texCoord = uv0; target++;
+    target->position = { r, -r,  r }; target->normal = backNormal; target->texCoord = uv1; target++;
 
     // Right face (+X)
     vec3 rightNormal = { 1.0f, 0.0f, 0.0f };
-    target->position = { r,  r, -r }; target->normal = rightNormal; target++;
-    target->position = { r,  r,  r }; target->normal = rightNormal; target++;
-    target->position = { r, -r,  r }; target->normal = rightNormal; target++;
-    target->position = { r, -r, -r }; target->normal = rightNormal; target++;
+    target->position = { r,  r, -r }; target->normal = rightNormal; target->texCoord = uv2; target++;
+    target->position = { r,  r,  r }; target->normal = rightNormal; target->texCoord = uv3; target++;
+    target->position = { r, -r,  r }; target->normal = rightNormal; target->texCoord = uv0; target++;
+    target->position = { r, -r, -r }; target->normal = rightNormal; target->texCoord = uv1; target++;
 
     // Left face (-X)
     vec3 leftNormal = { -1.0f, 0.0f, 0.0f };
-    target->position = { -r,  r, -r }; target->normal = leftNormal; target++;
-    target->position = { -r,  r,  r }; target->normal = leftNormal; target++;
-    target->position = { -r, -r,  r }; target->normal = leftNormal; target++;
-    target->position = { -r, -r, -r }; target->normal = leftNormal; target++;
+    target->position = { -r,  r, -r }; target->normal = leftNormal; target->texCoord = uv2; target++;
+    target->position = { -r,  r,  r }; target->normal = leftNormal; target->texCoord = uv3; target++;
+    target->position = { -r, -r,  r }; target->normal = leftNormal; target->texCoord = uv0; target++;
+    target->position = { -r, -r, -r }; target->normal = leftNormal; target->texCoord = uv1; target++;
 
     // Top face (+Y)
     vec3 topNormal = { 0.0f, 1.0f, 0.0f };
-    target->position = { r,  r, -r }; target->normal = topNormal; target++;
-    target->position = { -r,  r, -r }; target->normal = topNormal; target++;
-    target->position = { -r,  r,  r }; target->normal = topNormal; target++;
-    target->position = { r,  r,  r }; target->normal = topNormal; target++;
+    target->position = { r,  r, -r }; target->normal = topNormal; target->texCoord = uv2; target++;
+    target->position = { -r,  r, -r }; target->normal = topNormal; target->texCoord = uv3; target++;
+    target->position = { -r,  r,  r }; target->normal = topNormal; target->texCoord = uv0; target++;
+    target->position = { r,  r,  r }; target->normal = topNormal; target->texCoord = uv1; target++;
 
     // Bottom face (-Y)
     vec3 bottomNormal = { 0.0f, -1.0f, 0.0f };
-    target->position = { r, -r, -r }; target->normal = bottomNormal; target++;
-    target->position = { -r, -r, -r }; target->normal = bottomNormal; target++;
-    target->position = { -r, -r,  r }; target->normal = bottomNormal; target++;
-    target->position = { r, -r,  r }; target->normal = bottomNormal; target++;
+    target->position = { r, -r, -r }; target->normal = bottomNormal; target->texCoord = uv2; target++;
+    target->position = { -r, -r, -r }; target->normal = bottomNormal; target->texCoord = uv3; target++;
+    target->position = { -r, -r,  r }; target->normal = bottomNormal; target->texCoord = uv0; target++;
+    target->position = { r, -r,  r }; target->normal = bottomNormal; target->texCoord = uv1; target++;
 
     return target;
 }
@@ -111,17 +122,17 @@ namespace test
     const int MaxVertexCount = MaxCubeCount * 24;
     const int MaxIndexCount = MaxCubeCount * 36;
 
-    LightTest::LightTest()
-		:lightPos(0, 0, 300), objectPos(0, 0, 0), m_lightColor(1, 1, 1), m_toyColor(1, 0.5, 0),
-		ambientColor(0.19225, 0.19225, 0.19225), diffuseColor(0.50754, 0.50754, 0.50754), specularColor(0.508273, 0.508273, 0.508273),
-		ambientLight(0.2, 0.2, 0.2), diffuseLight(0.5, 0.5, 0.5), specularLight(1.0, 1.0, 1.0),
-        shininess(0.4*128)
+    LightingMaps::LightingMaps()
+        :lightPos(0, 0, 300), objectPos(0, 0, 0), m_lightColor(1, 1, 1), m_toyColor(1, 0.5, 0),
+        ambientColor(0.19225, 0.19225, 0.19225), specularColor(0.508273, 0.508273, 0.508273),
+        ambientLight(0.4, 0.4, 0.4), diffuseLight(0.5, 0.5, 0.5), specularLight(1.0, 1.0, 1.0),
+        shininess(0.4 * 128)
     {
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_DEPTH_TEST));
         GLCall(glEnable(GL_BLEND));
 
-		std::vector<unsigned int> indices(MaxIndexCount);
+        std::vector<unsigned int> indices(MaxIndexCount);
         indices = CreateCubeIndices(indices);
 
         m_VBO = std::make_unique<VertexBuffer>(nullptr, MaxVertexCount * sizeof(vertex), true);
@@ -129,23 +140,27 @@ namespace test
 
         m_LightVAO = std::make_unique<VertexArray>();
         m_LightShader = std::make_unique<Shader>("res/shaders/LightCube.shader");
-        
+
         m_ObjectVAO = std::make_unique<VertexArray>();
-        m_ObjectShader = std::make_unique<Shader>("res/shaders/Object.shader");
-        
+        m_ObjectShader = std::make_unique<Shader>("res/shaders/LightingMaps.shader");
+
+        m_Texture = std::make_unique<Texture>("res/textures/container2.png");
+        m_Texture_Specular = std::make_unique<Texture>("res/textures/container2_specular.png");
+
         VertexBufferLayout layout;
         layout.Push<float>(3);//Position
-		layout.Push<float>(3);//Normal
+        layout.Push<float>(3);//Normal
+        layout.Push<float>(2);//TexCoord
         m_LightVAO->AddBuffer(*m_VBO, layout);
         m_ObjectVAO->AddBuffer(*m_VBO, layout);
     }
 
-    LightTest::~LightTest()
+    LightingMaps::~LightingMaps()
     {
 
     }
 
-    void LightTest::OnUpdate(float deltaTime)
+    void LightingMaps::OnUpdate(float deltaTime)
     {
         cam.CameraUpdate();
 
@@ -157,7 +172,7 @@ namespace test
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices.data());
     }
 
-    void LightTest::OnRender()
+    void LightingMaps::OnRender()
     {
         GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
         GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
@@ -166,7 +181,7 @@ namespace test
         float aspect = (float)800 / 800; // 屏幕宽高比
         float nearPlane = 0.1f;
         float farPlane = 1500.0f;
-		m_proj = cam.GetProjectionMatrix(aspect, nearPlane, farPlane);
+        m_proj = cam.GetProjectionMatrix(aspect, nearPlane, farPlane);
         m_view = cam.GetViewMatrix();
 
         Renderer render;
@@ -176,8 +191,8 @@ namespace test
 
             lightPos.x = cos(theta) * radius;
             lightPos.z = sin(theta) * radius;
-			//std::cout << lightPos.x << "," << lightPos.y << "," << lightPos.z << std::endl;
-			m_model = glm::translate(glm::mat4(1.0f), lightPos);
+            //std::cout << lightPos.x << "," << lightPos.y << "," << lightPos.z << std::endl;
+            m_model = glm::translate(glm::mat4(1.0f), lightPos);
             m_model = glm::scale(m_model, glm::vec3(0.05f));
 
             m_LightShader->Bind();
@@ -188,18 +203,20 @@ namespace test
             render.Draw(*m_LightVAO, *m_IndexBuffer, *m_LightShader);
         }
         {
-			m_model = glm::translate(glm::mat4(1.0f), objectPos);
-			m_model = glm::rotate(m_model, glm::radians(rx), glm::vec3(1, 0, 0));
-			rx += 0.5f;
+            m_model = glm::translate(glm::mat4(1.0f), objectPos);
+            m_model = glm::rotate(m_model, glm::radians(rx), glm::vec3(1, 0, 0));
+            rx += 0.5f;
 
             m_ObjectShader->Bind();
+			m_Texture->Bind(0);
+			m_Texture_Specular->Bind(1);
+
             m_ObjectShader->SetUniformMat4f("u_Projection", m_proj);
             m_ObjectShader->SetUniformMat4f("u_View", m_view);
             m_ObjectShader->SetUniformMat4f("u_Model", m_model);
 
-            m_ObjectShader->SetUniformVec3f("u_material.ambient", ambientColor);
-            m_ObjectShader->SetUniformVec3f("u_material.diffuse", diffuseColor);
-            m_ObjectShader->SetUniformVec3f("u_material.specular", specularColor);
+            m_ObjectShader->SetUniform1i("u_material.texture_Ambient", 0);//绑定纹理到插槽0
+            m_ObjectShader->SetUniform1i("u_material.texture_Specular", 1);//绑定纹理到插槽1
             m_ObjectShader->SetUniform1f("u_material.shininess", shininess);
 
             m_ObjectShader->SetUniformVec3f("u_Light.lightPos", lightPos);
@@ -207,13 +224,13 @@ namespace test
             m_ObjectShader->SetUniformVec3f("u_Light.diffuse", diffuseLight);
             m_ObjectShader->SetUniformVec3f("u_Light.specular", specularLight);
 
-            m_ObjectShader->SetUniformVec3f("u_CamPos", cam.GetPosition());            
+            m_ObjectShader->SetUniformVec3f("u_CamPos", cam.GetPosition());
             render.Draw(*m_ObjectVAO, *m_IndexBuffer, *m_ObjectShader);
         }
 
     }
 
-    void LightTest::OnImGuiRender()
+    void LightingMaps::OnImGuiRender()
     {
         ImGui::Text("Transformations");
         ImGui::SliderFloat("radius", &radius, 0.0f, 500.0f);
@@ -221,15 +238,12 @@ namespace test
         ImGui::SliderFloat3("objectPos", &objectPos.x, -900.0f, 900.0f);
         ImGui::Separator();
 
-		ImGui::Text("Object Material");
-        ImGui::SliderFloat3("ambientColor", &ambientColor.x, 0.0f, 1.0f);
-        ImGui::SliderFloat3("diffuseColor", &diffuseColor.x, 0.0f, 1.0f);
-        ImGui::SliderFloat3("specularColor", &specularColor.x, 0.0f, 1.0f);
+        ImGui::Text("Object Material");
         ImGui::SliderFloat("shininess", &shininess, 0.0f, 256.0f);
 
-		ImGui::Text("Light Strength");
+        ImGui::Text("Light Strength");
         ImGui::SliderFloat3("ambientLight", &ambientLight.x, 0.0f, 1.0f);
         ImGui::SliderFloat3("diffuseLight", &diffuseLight.x, 0.0f, 1.0f);
-		ImGui::SliderFloat3("specularLight", &specularLight.x, 0.0f, 1.0f);
+        ImGui::SliderFloat3("specularLight", &specularLight.x, 0.0f, 1.0f);
     }
 }

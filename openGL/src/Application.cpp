@@ -19,12 +19,17 @@
 #include "tests/VertexIndex.h"
 #include "tests/CameraTest.h"
 #include "tests/LightTest.h"
+#include "tests/LightingMaps.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "vendor/imgui/imgui.h"
 #include "vendor/imgui/imgui_impl_glfw_gl3.h"
 using namespace std;
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+    mouseState.scroll_y = yoffset;
+}
 
 void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
     //std::cout << "Mouse moved to (" << xpos << ", " << ypos << ")" << std::endl;
@@ -110,10 +115,12 @@ int main(void)
         testMenu->RegisterTest<test::VertexIndex>("VertexIndex");
         testMenu->RegisterTest<test::CameraTest>("CameraTest");
         testMenu->RegisterTest<test::LightTest>("LightTest");
+        testMenu->RegisterTest<test::LightingMaps>("LightingMaps");
 
         //»Øµ÷º¯Êý
         glfwSetKeyCallback(window, key_callback);
         glfwSetCursorPosCallback(window, cursor_position_callback);
+		glfwSetScrollCallback(window, scroll_callback);
 
         while (!glfwWindowShouldClose(window))
         {
