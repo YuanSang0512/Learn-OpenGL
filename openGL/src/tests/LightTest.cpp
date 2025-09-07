@@ -73,11 +73,10 @@ static vertex* CreateCube(vertex* target, float size)
 }
 
 
-static unsigned int* CreateCubeIndices(unsigned int* indices, const int MaxIndexCount)
+static std::vector<unsigned int> CreateCubeIndices(std::vector<unsigned int> indices)
 {
     int offset = 0;
-    indices = new unsigned int[MaxIndexCount];
-    for (int i = 0; i < MaxIndexCount; i += 36)
+    for (int i = 0; i < indices.size(); i += 36)
     {
         // Front face
         indices[i + 0] = 0 + offset; indices[i + 1] = 1 + offset; indices[i + 2] = 2 + offset;
@@ -116,20 +115,19 @@ namespace test
 
     LightTest::LightTest()
 		:lightPos(0, 0, 300), objectPos(0, 0, 0), m_lightColor(1, 1, 1), m_toyColor(1, 0.5, 0),
-		ambientColor(0.0215, 0.1745, 0.0215), diffuseColor(0.07568, 0.61424, 0.07568), specularColor(0.633, 0.727811, 0.633),
+		ambientColor(0.19225, 0.19225, 0.19225), diffuseColor(0.50754, 0.50754, 0.50754), specularColor(0.508273, 0.508273, 0.508273),
 		ambientLight(0.2, 0.2, 0.2), diffuseLight(0.5, 0.5, 0.5), specularLight(1.0, 1.0, 1.0),
-        shininess(32)
+        shininess(0.4*128)
     {
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_DEPTH_TEST));
         GLCall(glEnable(GL_BLEND));
 
-
-        unsigned int* indices = NULL;
-        indices = CreateCubeIndices(indices, MaxIndexCount);
+		std::vector<unsigned int> indices(MaxIndexCount);
+        indices = CreateCubeIndices(indices);
 
         m_VBO = std::make_unique<VertexBuffer>(nullptr, MaxVertexCount * sizeof(vertex), true);
-        m_IndexBuffer = std::make_unique<IndexBuffer>(indices, MaxIndexCount);
+        m_IndexBuffer = std::make_unique<IndexBuffer>(indices.data(), MaxIndexCount);
 
         m_LightVAO = std::make_unique<VertexArray>();
         m_LightShader = std::make_unique<Shader>("res/shaders/LightCube.shader");
@@ -223,11 +221,6 @@ namespace test
         ImGui::SliderFloat("radius", &radius, 0.0f, 500.0f);
         ImGui::SliderFloat3("lightPos", &lightPos.x, -900.0f, 900.0f);
         ImGui::SliderFloat3("objectPos", &objectPos.x, -900.0f, 900.0f);
-        ImGui::Separator();
-
-        ImGui::Text("Light/Object Color");
-		ImGui::SliderFloat3("m_lightColor", &m_lightColor.x, 0.0f, 1.0f);
-        ImGui::SliderFloat3("m_toyColor", &m_toyColor.x, 0.0f, 1.0f);
         ImGui::Separator();
 
 		ImGui::Text("Object Material");
