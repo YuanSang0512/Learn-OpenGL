@@ -87,6 +87,12 @@
     <ClCompile Include="src\tests\LightingMaps.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Mesh.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Model.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
@@ -179,6 +185,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\tests\LightingMaps.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
