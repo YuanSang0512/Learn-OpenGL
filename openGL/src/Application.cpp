@@ -20,6 +20,7 @@
 #include "tests/CameraTest.h"
 #include "tests/LightTest.h"
 #include "tests/LightingMaps.h"
+#include "tests/ModelTest.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -79,12 +80,12 @@ int main(void)
 
     //初始化glfw
     if (!glfwInit()) { exit(EXIT_FAILURE); }
-    //创建GLFW窗口
-    GLFWwindow* window = glfwCreateWindow(900, 900, "Open_GL", NULL, NULL);
     //指定OpenGL版本
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    //创建GLFW窗口
+    GLFWwindow* window = glfwCreateWindow(1500, 1500, "Open_GL", NULL, NULL);
     //设置上下文
     glfwMakeContextCurrent(window);
     if (glewInit() != GLEW_OK) { exit(EXIT_FAILURE); }
@@ -116,6 +117,7 @@ int main(void)
         testMenu->RegisterTest<test::CameraTest>("CameraTest");
         testMenu->RegisterTest<test::LightTest>("LightTest");
         testMenu->RegisterTest<test::LightingMaps>("LightingMaps");
+        testMenu->RegisterTest<test::ModelTest>("ModelTest");
 
         //回调函数
         glfwSetKeyCallback(window, key_callback);

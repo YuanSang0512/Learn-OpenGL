@@ -1,0 +1,305 @@
+newmtl 袖子
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 袖子饰
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 脖饰
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 手套
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 袜子
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 外套
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 袖子2
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 胸饰
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 领带
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 裙子
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 裙子1
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 背带
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 背饰铃铛
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 衣领
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 发饰
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 肩带
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 裙饰铁
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 衣饰铁
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 鞋子饰
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 鞋子
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 头发
+map_Kd .\hair.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 裙子内侧
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag GroundShadow, ReceiveShadowMap, ReceiveShadow
+d 1
+
+newmtl 鞋子饰内侧
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag GroundShadow, ReceiveShadowMap, ReceiveShadow
+d 1
+
+newmtl 袖子内侧
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 2; EdgeFlag GroundShadow, ReceiveShadowMap, ReceiveShadow
+d 1
+
+newmtl 皮肤
+map_Kd .\close.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 5; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 脸
+map_Kd .\face.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 5; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 1
+
+newmtl 眉毛
+map_Kd .\face.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 255; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow
+d 1
+
+newmtl 牙齿
+map_Kd .\face.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 255; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow
+d 1
+
+newmtl 舌头
+map_Kd .\face.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 255; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow
+d 1
+
+newmtl 口腔
+map_Kd .\face.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 255; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow
+d 1
+
+newmtl 眼白
+map_Kd .\face.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 255; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow
+d 1
+
+newmtl 眼睛
+map_Kd .\face.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 5
+#Toon 255; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow
+d 1
+
+newmtl 眼睛1
+map_Kd .\face.png
+Ka 0 0 0
+Kd 0.7529412 0.7529412 0.7529412
+Ks 0 0 0
+Ns 5
+#Toon 255; EdgeFlag DisableFaceCulling, GroundShadow, ReceiveShadowMap, ReceiveShadow, HasEdge
+d 0.3
+
+newmtl 表情
+map_Kd .\expression.png
+Ka 0.7529412 0.7529412 0.7529412
+Kd 1 1 1
+Ks 0 0 0
+Ns 15.3
+#Toon 255; EdgeFlag GroundShadow, ReceiveShadowMap, ReceiveShadow
+d 1

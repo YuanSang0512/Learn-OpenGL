@@ -13,14 +13,14 @@ class Model
 {
 public:
     /*  函数   */
-    Model(char* path)
+    Model(const char* path)
     {
         loadModel(path);
     }
     void Draw(Shader& shader);
+    std::vector<Mesh> meshes;
 private:
     /*  模型数据  */
-    std::vector<Mesh> meshes;
     std::string directory;
     std::vector<TextureInfo> textures_loaded;
     /*  函数   */

@@ -17,6 +17,7 @@ Camera::Camera(glm::vec3 pos, float yaw , float pitch,
 /// </summary>
 void Camera::CameraUpdate(float deltaTime)
 {
+	//std::cout << position.x << ", " << position.y << ", " << position.z << std::endl;
 	if (keyState.table)
 	{
 		yaw += mouseState.diff_x * mouseSensitivity * deltaTime;

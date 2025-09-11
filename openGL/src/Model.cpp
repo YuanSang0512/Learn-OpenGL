@@ -24,6 +24,7 @@ void Model::loadModel(std::string path)
     directory = path.substr(0, path.find_last_of('/'));
 
     processNode(scene->mRootNode, scene);
+	std::cout << "Load " << meshes.size() << " meshes from model " << path << std::endl;
 }
 
 /// <summary>
@@ -89,6 +90,10 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
             aiTextureType_SPECULAR, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
+	//std::cout << "Load " << textures.size() << " textures from mesh." << std::endl;
+    std::cout << "Mesh vertices: " << vertices.size()
+        << ", indices: " << indices.size()
+        << ", textures: " << textures.size() << std::endl;
 
     return Mesh(vertices, indices, textures);
 }
@@ -144,6 +149,7 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, boo
 
     unsigned int textureID;
     glGenTextures(1, &textureID);
+    stbi_set_flip_vertically_on_load(1);//把图片上下翻转
 
     int width, height, nrComponents;
     unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
@@ -159,7 +165,7 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, boo
 
         glBindTexture(GL_TEXTURE_2D, textureID);
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
+        GLCall(glGenerateMipmap(GL_TEXTURE_2D));
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

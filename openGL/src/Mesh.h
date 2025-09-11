@@ -25,21 +25,16 @@ struct TextureInfo {
 
 class Mesh {
 public:
-    /*  网格数据  */
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
     std::vector<TextureInfo> textures;
 
-
-
-    /*  函数  */
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<TextureInfo> textures);
     void Draw(Shader& shader);
 private:
-    /*  渲染数据  */
     std::unique_ptr<VertexArray> m_VAO;
     std::unique_ptr<VertexBuffer> m_VBO;
     std::unique_ptr<IndexBuffer> m_EBO;
-    /*  函数  */
+
     void setupMesh();
 };
