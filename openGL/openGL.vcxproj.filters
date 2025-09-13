@@ -93,6 +93,12 @@
     <ClCompile Include="src\Model.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\tests\ModelTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BasicModel\BasicModels.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
@@ -104,6 +110,7 @@
     <None Include="res\shaders\LightCube.shader" />
     <None Include="res\shaders\Object.shader" />
     <None Include="res\shaders\LightingMaps.shader" />
+    <None Include="res\shaders\ModelTest.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -191,6 +198,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Model.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tests\ModelTest.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BasicModel\BasicModels.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -32,7 +32,7 @@ void Mesh::Draw(Shader& shader)
 
     // 绘制网格
 	renderer.Draw(*m_VAO, *m_EBO, shader);
-	//m_VAO->Unbind();
+	m_VAO->Unbind();
 }
 
 //注意VBO传入数据为nullptr

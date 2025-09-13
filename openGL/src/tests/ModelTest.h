@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL/glew.h>        // glew.h 必须在 glfw3.h 前
+#include <GL/glew.h> 
 #include "GLFW/glfw3.h"
 
 #include "Test.h"
@@ -29,15 +29,22 @@ namespace test
 		void OnImGuiRender() override;
 
 		Camera cam;
-		Model backpack = Model("res/models/LiuYing/liuying3.0.obj");
+		Model backpack = Model("res/models/backpack/backpack.obj");
 	private:
+		//光源
+		std::unique_ptr<VertexBuffer> m_LightVBO;
+		std::unique_ptr<VertexArray> m_LightVAO;
+		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		std::unique_ptr<Shader> m_LightShader;
+		std::unique_ptr<Texture> m_Texture, m_Texture_Specular;
+
+		//物体
 		std::unique_ptr<Shader> m_Shader;
 
 		glm::mat4 m_proj, m_view, m_model;
-		glm::vec3 m_lightColor, m_toyColor, f_toyColor;
+		glm::vec3 m_lightColor;
 		glm::vec3 lightPos, objectPos, cameraPos;
-		glm::vec3 ambientColor, specularColor;//控制物体材质,漫反射由texture控制
-		glm::vec3 ambientLight, diffuseLight, specularLight;//控制光照强度
+		glm::vec3 ambientLight, diffuseLight, specularLight;//控制光照影响强度
 		float shininess, ry = 0, radius = 300.0f;
 	};
 }

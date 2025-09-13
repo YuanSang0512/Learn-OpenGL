@@ -1,26 +1,45 @@
+#include <array>
+
 #include "ModelTest.h"
-
+#include "BasicModels.h"
 #include "InputProcess.h"
-#include "imgui/imgui.h"
 
+#include "imgui/imgui.h"
 #include <GL/glew.h>
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include <array>
 
 namespace test
 {
     ModelTest::ModelTest()
-        :lightPos(0, 0, 300), objectPos(0, 0, 0), m_lightColor(1, 1, 1), m_toyColor(1, 0.5, 0),
-        ambientColor(0.19225, 0.19225, 0.19225), specularColor(0.508273, 0.508273, 0.508273),
-        ambientLight(0.4, 0.4, 0.4), diffuseLight(0.5, 0.5, 0.5), specularLight(1.0, 1.0, 1.0),
-        shininess(0.4 * 128)
+        :lightPos(0, 0, 300), objectPos(0, 0, 0), m_lightColor(1, 1, 1), shininess(32),
+        ambientLight(0.4, 0.4, 0.4), diffuseLight(0.4, 0.4, 0.4), specularLight(0.5, 0.5, 0.5)
     {
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_DEPTH_TEST));
         GLCall(glEnable(GL_BLEND));
 
+		//光源
+        BasicModels basicModels;
+		std::vector<unsigned int> indices(36);
+		indices = basicModels.CreateCubeIndices(indices);
+
+        std::array<vertex, 24> vertices;
+        vertex* buffer = vertices.data();
+        buffer = basicModels.CreateCubeVertexs(buffer, 300.0f);
+
+		m_IndexBuffer = std::make_unique<IndexBuffer>(indices.data(), 36);
+		m_LightVBO = std::make_unique<VertexBuffer>(vertices.data(), 24 * sizeof(vertex), false);
+		m_LightVAO = std::make_unique<VertexArray>();
+		m_LightShader = std::make_unique<Shader>("res/shaders/LightCube.shader");
+		VertexBufferLayout layout;
+		layout.Push<float>(3);//Position
+		layout.Push<float>(3);//Normal
+		layout.Push<float>(2);//TexCoord
+		m_LightVAO->AddBuffer(*m_LightVBO, layout);
+
+        //物体
         m_Shader = std::make_unique<Shader>("res/shaders/ModelTest.shader");
     }
 
@@ -57,7 +76,37 @@ namespace test
             m_Shader->SetUniformMat4f("u_View", m_view);
             m_Shader->SetUniformMat4f("u_Model", m_model);
 
+            m_Shader->SetUniform1f("u_Material.shininess", shininess);
+
+            m_Shader->SetUniformVec3f("u_Light.lightPos", lightPos);
+            m_Shader->SetUniformVec3f("u_Light.ambient", ambientLight);
+            m_Shader->SetUniformVec3f("u_Light.diffuse", diffuseLight);
+            m_Shader->SetUniformVec3f("u_Light.specular", specularLight);
+
+            m_Shader->SetUniformVec3f("u_CamPos", cam.GetPosition());
+
             backpack.Draw(*m_Shader);
+        }
+
+        Renderer render;
+        {
+            float speed = 1.0f; // 旋转速度倍数
+            float theta = glfwGetTime() * speed;
+
+            lightPos.x = cos(theta) * radius;
+            lightPos.z = sin(theta) * radius;
+
+			m_model = glm::translate(glm::mat4(1.0f), lightPos);
+			m_model = glm::scale(m_model, glm::vec3(0.05f));
+
+			m_LightShader->Bind();
+			m_LightShader->SetUniformMat4f("u_Projection", m_proj);
+			m_LightShader->SetUniformMat4f("u_View", m_view);
+			m_LightShader->SetUniformMat4f("u_Model", m_model);
+
+            m_LightShader->SetUniformVec3f("u_Color", m_lightColor);
+
+			render.Draw(*m_LightVAO, *m_IndexBuffer, *m_LightShader);
         }
 
     }
@@ -78,4 +127,6 @@ namespace test
         ImGui::SliderFloat3("diffuseLight", &diffuseLight.x, 0.0f, 1.0f);
         ImGui::SliderFloat3("specularLight", &specularLight.x, 0.0f, 1.0f);
     }
+
+
 }
