@@ -153,6 +153,7 @@
     <ClCompile Include="src\tests\LightingMaps.cpp" />
     <ClCompile Include="src\tests\LightTest.cpp" />
     <ClCompile Include="src\tests\ModelTest.cpp" />
+    <ClCompile Include="src\tests\StencilTest.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\TestClearColor.cpp" />
     <ClCompile Include="src\tests\ColorfulCube.cpp" />
@@ -172,6 +173,7 @@
     <None Include="res\shaders\Basic.shader" />
     <None Include="res\shaders\CameraTest.shader" />
     <None Include="res\shaders\ColorfulCube.shader" />
+    <None Include="res\shaders\Cube.shader" />
     <None Include="res\shaders\DynamicVBO.shader" />
     <None Include="res\shaders\LightCube.shader" />
     <None Include="res\shaders\ModelTest.shader" />
@@ -194,6 +196,7 @@
     <ClInclude Include="src\tests\LightingMaps.h" />
     <ClInclude Include="src\tests\LightTest.h" />
     <ClInclude Include="src\tests\ModelTest.h" />
+    <ClInclude Include="src\tests\StencilTest.h" />
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\TestClearColor.h" />
     <ClInclude Include="src\tests\ColorfulCube.h" />

@@ -99,6 +99,9 @@
     <ClCompile Include="src\BasicModel\BasicModels.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\tests\StencilTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
@@ -111,6 +114,7 @@
     <None Include="res\shaders\Object.shader" />
     <None Include="res\shaders\LightingMaps.shader" />
     <None Include="res\shaders\ModelTest.shader" />
+    <None Include="res\shaders\Cube.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -204,6 +208,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\BasicModel\BasicModels.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tests\StencilTest.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
