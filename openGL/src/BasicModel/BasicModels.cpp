@@ -88,3 +88,56 @@ std::vector<unsigned int> BasicModels::CreateCubeIndices(std::vector<unsigned in
     }
     return indices;
 }
+
+vertex* BasicModels::CreatePlaneVertexs(vertex* target, vec2 size, vec3 normal)
+{
+    float hx = size.x / 2.0f;
+    float hy = size.y / 2.0f;
+
+    // 常用纹理坐标
+    vec2 uv0 = { 0.0f, 0.0f };
+    vec2 uv1 = { 1.0f, 0.0f };
+    vec2 uv2 = { 1.0f, 1.0f };
+    vec2 uv3 = { 0.0f, 1.0f };
+
+    // 判断 normal 朝向，生成对应平面
+    if (normal.x != 0.0f) // YZ 平面
+    {
+        float dir = (normal.x > 0) ? 1.0f : -1.0f;
+        target->position = { dir * 0.0f,  hy, -hx }; target->normal = normal; target->texCoord = uv2; target++;
+        target->position = { dir * 0.0f,  hy,  hx }; target->normal = normal; target->texCoord = uv3; target++;
+        target->position = { dir * 0.0f, -hy,  hx }; target->normal = normal; target->texCoord = uv0; target++;
+        target->position = { dir * 0.0f, -hy, -hx }; target->normal = normal; target->texCoord = uv1; target++;
+    }
+    else if (normal.y != 0.0f) // XZ 平面
+    {
+        float dir = (normal.y > 0) ? 1.0f : -1.0f;
+        target->position = { hx, dir * 0.0f, -hy }; target->normal = normal; target->texCoord = uv2; target++;
+        target->position = { -hx, dir * 0.0f, -hy }; target->normal = normal; target->texCoord = uv3; target++;
+        target->position = { -hx, dir * 0.0f,  hy }; target->normal = normal; target->texCoord = uv0; target++;
+        target->position = { hx, dir * 0.0f,  hy }; target->normal = normal; target->texCoord = uv1; target++;
+    }
+    else // XY 平面 (normal z != 0)
+    {
+        float dir = (normal.z > 0) ? 1.0f : -1.0f;
+        target->position = { hx,  hy, dir * 0.0f }; target->normal = normal; target->texCoord = uv2; target++;
+        target->position = { -hx,  hy, dir * 0.0f }; target->normal = normal; target->texCoord = uv3; target++;
+        target->position = { -hx, -hy, dir * 0.0f }; target->normal = normal; target->texCoord = uv0; target++;
+        target->position = { hx, -hy, dir * 0.0f }; target->normal = normal; target->texCoord = uv1; target++;
+    }
+
+    return target;
+}
+
+std::vector<unsigned int> BasicModels::CreatePlaneIndices(std::vector<unsigned int> indices)
+{
+    int offset = 0;
+    for (int i = 0; i < indices.size(); i += 6)
+    {
+        indices[i + 0] = 0 + offset; indices[i + 1] = 1 + offset; indices[i + 2] = 2 + offset;
+        indices[i + 3] = 2 + offset; indices[i + 4] = 3 + offset; indices[i + 5] = 0 + offset;
+
+        offset += 4; // 每个平面只有 4 个顶点
+    }
+    return indices;
+}

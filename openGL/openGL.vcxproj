@@ -148,6 +148,7 @@
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\tests\BlendingTest.cpp" />
     <ClCompile Include="src\tests\CameraTest.cpp" />
     <ClCompile Include="src\tests\DynamicVBO.cpp" />
     <ClCompile Include="src\tests\LightingMaps.cpp" />
@@ -171,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
+    <None Include="res\shaders\BlendingTest.shader" />
     <None Include="res\shaders\CameraTest.shader" />
     <None Include="res\shaders\ColorfulCube.shader" />
     <None Include="res\shaders\Cube.shader" />
@@ -191,6 +193,7 @@
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\tests\BlendingTest.h" />
     <ClInclude Include="src\tests\CameraTest.h" />
     <ClInclude Include="src\tests\DynamicVBO.h" />
     <ClInclude Include="src\tests\LightingMaps.h" />

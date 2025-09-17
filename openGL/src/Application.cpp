@@ -22,6 +22,7 @@
 #include "tests/LightingMaps.h"
 #include "tests/ModelTest.h"
 #include "tests/StencilTest.h"
+#include "tests/BlendingTest.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -120,6 +121,7 @@ int main(void)
         testMenu->RegisterTest<test::LightingMaps>("LightingMaps");
         testMenu->RegisterTest<test::ModelTest>("ModelTest");
         testMenu->RegisterTest<test::StencilTest>("StencilTest");
+        testMenu->RegisterTest<test::BlendingTest>("BlendingTest");
 
         //»Øµ÷º¯Êý
         glfwSetKeyCallback(window, key_callback);

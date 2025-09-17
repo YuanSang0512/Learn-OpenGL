@@ -78,6 +78,21 @@ namespace test
         m_view = cam.GetViewMatrix();
 
         Renderer render;
+        //物体
+        {
+            GLCall(glStencilFunc(GL_ALWAYS, 1, 0xFF));
+            GLCall(glStencilMask(0xFF)); // 启用模板缓冲写入
+            m_model = glm::translate(glm::mat4(1.0f), objectPos);
+            m_model = glm::rotate(m_model, glm::radians(ry), glm::vec3(0, 1, 0));
+            m_model = glm::scale(m_model, glm::vec3(1.0f));
+
+            m_ObjectShader->Bind();
+            m_ObjectShader->SetUniformMat4f("u_Projection", m_proj);
+            m_ObjectShader->SetUniformMat4f("u_View", m_view);
+            m_ObjectShader->SetUniformMat4f("u_Model", m_model);
+            m_ObjectShader->SetUniformVec3f("u_Color", glm::vec3(1.0, 1.0, 1.0));
+            render.Draw(*m_ObjectVAO, *m_IndexBuffer, *m_ObjectShader);
+        }
         //遮挡物
         {
             GLCall(glStencilFunc(GL_ALWAYS, 1, 0xFF));
@@ -93,25 +108,12 @@ namespace test
             m_ObjectShader->SetUniformVec3f("u_Color", glm::vec3(0.0, 1.0, 1.0));
             render.Draw(*m_ObjectVAO, *m_IndexBuffer, *m_ObjectShader);
         }
-        //物体
-        {
-			GLCall(glStencilFunc(GL_ALWAYS, 1, 0xFF));
-            GLCall(glStencilMask(0xFF)); // 启用模板缓冲写入
-            m_model = glm::translate(glm::mat4(1.0f), objectPos);
-            m_model = glm::rotate(m_model, glm::radians(ry), glm::vec3(0, 1, 0));
-            m_model = glm::scale(m_model, glm::vec3(1.0f));
-
-            m_ObjectShader->Bind();
-            m_ObjectShader->SetUniformMat4f("u_Projection", m_proj);
-            m_ObjectShader->SetUniformMat4f("u_View", m_view);
-            m_ObjectShader->SetUniformMat4f("u_Model", m_model);
-			m_ObjectShader->SetUniformVec3f("u_Color", glm::vec3(1.0, 1.0, 1.0));
-			render.Draw(*m_ObjectVAO, *m_IndexBuffer, *m_ObjectShader);
-        }
         //轮廓
         {
             glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
             glStencilMask(0x00);
+			glDepthMask(GL_FALSE);
+            glDepthFunc(GL_ALWAYS);
             m_model = glm::translate(glm::mat4(1.0f), objectPos);
             m_model = glm::rotate(m_model, glm::radians(ry), glm::vec3(0, 1, 0));
             m_model = glm::scale(m_model, glm::vec3(1.05f));
@@ -124,6 +126,8 @@ namespace test
 			render.Draw(*m_ObjectVAO, *m_IndexBuffer, *m_OutlineShader);
             glStencilMask(0xFF);
             glStencilFunc(GL_ALWAYS, 1, 0xFF);
+			glDepthMask(GL_TRUE);
+			glDepthFunc(GL_LESS);
         }
         //光源
         {
