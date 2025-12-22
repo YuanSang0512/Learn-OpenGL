@@ -144,8 +144,8 @@ namespace test
         m_ObjectVAO = std::make_unique<VertexArray>();
         m_ObjectShader = std::make_unique<Shader>("res/shaders/LightingMaps.shader");
 
-        m_Texture = std::make_unique<Texture>("res/textures/container2.png");
-        m_Texture_Specular = std::make_unique<Texture>("res/textures/container2_specular.png");
+        m_Texture = std::make_unique<Texture>("res/textures/container2.png", TEXTURE_2D);
+        m_Texture_Specular = std::make_unique<Texture>("res/textures/container2_specular.png", TEXTURE_2D);
 
         VertexBufferLayout layout;
         layout.Push<float>(3);//Position

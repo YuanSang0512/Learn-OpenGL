@@ -47,11 +47,11 @@ namespace test
 		m_GrassVAO = std::make_unique<VertexArray>();
 		m_GrassVBO = std::make_unique<VertexBuffer>(vertices_grass.data(), 4 * sizeof(vertex), false);
         m_GrassEBO = std::make_unique<IndexBuffer>(indices_grass.data(), 6);
-        m_GrassTexture = std::make_unique<Texture>("res/textures/grass.png");
+        m_GrassTexture = std::make_unique<Texture>("res/textures/grass.png", TEXTURE_2D);
 		m_GrassShader = std::make_unique<Shader>("res/shaders/BlendingTest.shader");
 
 		//´°»§ÎÆÀí
-		m_WindowTexture = std::make_unique<Texture>("res/textures/blending_transparent_window.png");
+		m_WindowTexture = std::make_unique<Texture>("res/textures/blending_transparent_window.png", TEXTURE_2D);
 
 
         VertexBufferLayout layout;

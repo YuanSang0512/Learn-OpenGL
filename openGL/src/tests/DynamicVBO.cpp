@@ -84,8 +84,8 @@ namespace test
         m_Shader = std::make_unique<Shader>("res/shaders/DynamicVBO.shader");
         m_Shader->Bind();
 
-        m_Texture1 = std::make_unique<Texture>("res/textures/earth.png");
-        m_Texture2 = std::make_unique<Texture>("res/textures/maodie.jpg");
+        m_Texture1 = std::make_unique<Texture>("res/textures/earth.png", TEXTURE_2D);
+        m_Texture2 = std::make_unique<Texture>("res/textures/maodie.jpg", TEXTURE_2D);
     }
 
     DynamicVBO::~DynamicVBO()

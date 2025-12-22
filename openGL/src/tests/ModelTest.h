@@ -29,7 +29,10 @@ namespace test
 		void OnImGuiRender() override;
 
 		Camera cam;
-		Model backpack = Model("res/models/backpack/backpack.obj");
+		//Model backpack = Model("res/models/backpack/backpack.obj");
+		//Model backpack = Model("res/models/cyborg/cyborg.obj");
+		Model backpack = Model("res/models/nanosuit/nanosuit.obj");
+		//Model backpack = Model("res/models/rock/rock.obj");
 	private:
 		//นโิด
 		std::unique_ptr<VertexBuffer> m_LightVBO;
