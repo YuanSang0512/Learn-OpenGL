@@ -32,7 +32,7 @@ namespace test
 		m_IndexBuffer = std::make_unique<IndexBuffer>(indices.data(), 36);
 		m_LightVBO = std::make_unique<VertexBuffer>(vertices.data(), 24 * sizeof(vertex), false);
 		m_LightVAO = std::make_unique<VertexArray>();
-		m_LightShader = std::make_unique<Shader>("res/shaders/LightCube.shader");
+		m_LightShader = std::make_unique<Shader>("E:/VS project/openGL/openGL/res/shaders/LightCube.shader");
 		VertexBufferLayout layout;
 		layout.Push<float>(3);//Position
 		layout.Push<float>(3);//Normal
@@ -40,7 +40,7 @@ namespace test
 		m_LightVAO->AddBuffer(*m_LightVBO, layout);
 
         //ÎïÌå
-        m_Shader = std::make_unique<Shader>("res/shaders/ModelTest.shader");
+        m_Shader = std::make_unique<Shader>("E:/VS project/openGL/openGL/res/shaders/ModelTest.shader");
     }
 
     ModelTest::~ModelTest()

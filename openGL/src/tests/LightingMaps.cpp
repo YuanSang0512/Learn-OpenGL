@@ -139,13 +139,13 @@ namespace test
         m_IndexBuffer = std::make_unique<IndexBuffer>(indices.data(), MaxIndexCount);
 
         m_LightVAO = std::make_unique<VertexArray>();
-        m_LightShader = std::make_unique<Shader>("res/shaders/LightCube.shader");
+        m_LightShader = std::make_unique<Shader>("E:/VS project/openGL/openGL/res/shaders/LightCube.shader");
 
         m_ObjectVAO = std::make_unique<VertexArray>();
-        m_ObjectShader = std::make_unique<Shader>("res/shaders/LightingMaps.shader");
+        m_ObjectShader = std::make_unique<Shader>("E:/VS project/openGL/openGL/res/shaders/LightingMaps.shader");
 
-        m_Texture = std::make_unique<Texture>("res/textures/container2.png", TEXTURE_2D);
-        m_Texture_Specular = std::make_unique<Texture>("res/textures/container2_specular.png", TEXTURE_2D);
+        m_Texture = std::make_unique<Texture>("E:/VS project/openGL/openGL/res/textures/container2.png", TextureType::TEXTURE_2D);
+        m_Texture_Specular = std::make_unique<Texture>("E:/VS project/openGL/openGL/res/textures/container2_specular.png", TextureType::TEXTURE_2D);
 
         VertexBufferLayout layout;
         layout.Push<float>(3);//Position

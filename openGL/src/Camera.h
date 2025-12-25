@@ -9,7 +9,7 @@
 class Camera
 {
 public:
-	Camera(glm::vec3 pos = {0, 0, 500}, float yaw = -90, float pitch = 0,
+	Camera(glm::vec3 pos = {0, 0, 0}, float yaw = -90, float pitch = 0,
 		glm::vec3 front = {0, 0, -1}, glm::vec3 up = {0, 1, 0}, glm::vec3 right = {1.0f, 0.0f, 0.0f});
 
 	void CameraUpdate(float deltaTime = 0.3f);

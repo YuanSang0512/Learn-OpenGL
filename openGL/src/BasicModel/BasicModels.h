@@ -18,11 +18,18 @@ struct vertex {
     vec2 texCoord;
 };
 
+struct skyVertex {
+    vec3 position;
+};
+
 class BasicModels
 {
 public:
     vertex* CreateCubeVertexs(vertex* target, float size);
     std::vector<unsigned int> CreateCubeIndices(std::vector<unsigned int> indices);
+
+    skyVertex* CreateSkyBoxVertexs(skyVertex* target, float size);
+    std::vector<unsigned int> CreateSkyBoxIndices(std::vector<unsigned int> indices);
 
     vertex* CreatePlaneVertexs(vertex* target, vec2 size, vec3 normal);
     std::vector<unsigned int> CreatePlaneIndices(std::vector<unsigned int> indices);

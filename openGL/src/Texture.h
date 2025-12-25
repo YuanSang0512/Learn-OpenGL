@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Renderer.h"
+#include <vector>
 #include <string>
 
-enum TextureType
+enum class TextureType
 {
 	TEXTURE_2D,
-	TEXTURE_CUBE_MAP,
-	// You can add more texture types here in the future
+	TEXTURE_CUBE_MAP
 };
 
 class Texture
@@ -17,6 +17,7 @@ private:
 	std::string m_FilePath;
 	unsigned char* m_LocalBuffer;
 	int m_Width, m_Height, m_BPP;
+	TextureType m_Type;
 public:
 	Texture(const std::string& path, TextureType type);
 	~Texture();
@@ -26,5 +27,16 @@ public:
 
 	inline int GetWidth() const { return m_Width; }
 	inline int GetHeight() const { return m_Height; }
+
+private:
+	std::vector<std::string> faces
+	{
+		"right.jpg",
+		"left.jpg",
+		"top.jpg",
+		"bottom.jpg",
+		"front.jpg",
+		"back.jpg"
+	};
 
 };

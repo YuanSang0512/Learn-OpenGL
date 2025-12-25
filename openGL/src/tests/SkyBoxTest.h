@@ -18,11 +18,11 @@
 
 namespace test
 {
-	class CubeMapTest : public Test
+	class SkyBoxTest : public Test
 	{
 	public:
-		CubeMapTest();
-		~CubeMapTest();
+		SkyBoxTest();
+		~SkyBoxTest();
 
 		void OnUpdate(float deltaTime) override;
 		void OnRender() override;
@@ -36,6 +36,20 @@ namespace test
 		float nearPlane = 0.1f;
 		float farPlane = 1500.0f;
 		#pragma endregion
+
+		//天空盒
+		std::unique_ptr<VertexBuffer> m_SkyBoxVBO;
+		std::unique_ptr<VertexArray> m_SkyBoxVAO;
+		std::unique_ptr<Shader> m_SkyBoxShader;
+		std::unique_ptr<IndexBuffer> m_SkyBoxEBO;
+		std::unique_ptr<Texture> m_SkyBoxTexture;
+		//立方体
+		bool Cube = true;
+		std::unique_ptr<VertexBuffer> m_ObjectVBO;
+		std::unique_ptr<VertexArray> m_ObjectVAO;
+		std::unique_ptr<Shader> m_ObjectShader;
+		std::unique_ptr<IndexBuffer> m_ObjectEBO;
+		std::unique_ptr<Texture> m_ObjectTexture;
 
 		glm::mat4 m_proj, m_view, m_model;
 		glm::vec3 m_CubeColor;

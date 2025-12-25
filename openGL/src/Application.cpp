@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <filesystem>
 
 #include "Renderer.h"
 #include "Shader.h"
@@ -23,7 +24,7 @@
 #include "tests/ModelTest.h"
 #include "tests/StencilTest.h"
 #include "tests/BlendingTest.h"
-#include "tests/CubeMapTest.h"
+#include "tests/SkyBoxTest.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -77,8 +78,18 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
-int main(void)
+//namespace fs = std::filesystem;
+//fs::path g_ResourceRoot;
+
+int main(int argc, char** argv)
 {
+    //// exe 所在目录
+    //fs::path exeDir = fs::absolute(argv[0]).parent_path();
+    //// exeDir = E:/VS project/openGL/x64/Debug
+
+    //// 回到项目根目录
+    //fs::path projectRoot = exeDir.parent_path().parent_path().parent_path();
+
     #pragma region 初始化
 
     //初始化glfw
@@ -107,6 +118,11 @@ int main(void)
         ImGui_ImplGlfwGL3_Init(window, true);
         ImGui::StyleColorsDark();
 
+        std::cout << "CWD = "
+            << std::filesystem::current_path()
+            << std::endl;
+        //system("pause");
+
         test::Test* currentTest = nullptr;
         test::TestMenu* testMenu = new test::TestMenu(currentTest);
         currentTest = testMenu;
@@ -123,7 +139,7 @@ int main(void)
         testMenu->RegisterTest<test::ModelTest>("ModelTest");
         testMenu->RegisterTest<test::StencilTest>("StencilTest");
         testMenu->RegisterTest<test::BlendingTest>("BlendingTest");
-		testMenu->RegisterTest<test::CubeMapTest>("CubeMapTest");
+		testMenu->RegisterTest<test::SkyBoxTest>("SkyBoxTest");
 
         //回调函数
         glfwSetKeyCallback(window, key_callback);

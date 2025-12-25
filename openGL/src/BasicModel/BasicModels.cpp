@@ -89,6 +89,84 @@ std::vector<unsigned int> BasicModels::CreateCubeIndices(std::vector<unsigned in
     return indices;
 }
 
+std::vector<unsigned int> BasicModels::CreateSkyBoxIndices(std::vector<unsigned int> indices)
+{
+    int offset = 0;
+    for (int i = 0; i < indices.size(); i += 36)
+    {
+        // Front face
+        indices[i + 0] = 0 + offset; indices[i + 1] = 1 + offset; indices[i + 2] = 2 + offset;
+        indices[i + 3] = 2 + offset; indices[i + 4] = 3 + offset; indices[i + 5] = 0 + offset;
+
+        // Back face
+        indices[i + 6] = 4 + offset; indices[i + 7] = 5 + offset; indices[i + 8] = 6 + offset;
+        indices[i + 9] = 6 + offset; indices[i + 10] = 7 + offset; indices[i + 11] = 4 + offset;
+
+        // Right face
+        indices[i + 12] = 8 + offset; indices[i + 13] = 9 + offset; indices[i + 14] = 10 + offset;
+        indices[i + 15] = 10 + offset; indices[i + 16] = 11 + offset; indices[i + 17] = 8 + offset;
+
+        // Left face
+        indices[i + 18] = 12 + offset; indices[i + 19] = 13 + offset; indices[i + 20] = 14 + offset;
+        indices[i + 21] = 14 + offset; indices[i + 22] = 15 + offset; indices[i + 23] = 12 + offset;
+
+        // Top face
+        indices[i + 24] = 16 + offset; indices[i + 25] = 17 + offset; indices[i + 26] = 18 + offset;
+        indices[i + 27] = 18 + offset; indices[i + 28] = 19 + offset; indices[i + 29] = 16 + offset;
+
+        // Bottom face
+        indices[i + 30] = 20 + offset; indices[i + 31] = 21 + offset; indices[i + 32] = 22 + offset;
+        indices[i + 33] = 22 + offset; indices[i + 34] = 23 + offset; indices[i + 35] = 20 + offset;
+
+        offset += 24;
+    }
+    return indices;
+}
+
+skyVertex* BasicModels::CreateSkyBoxVertexs(skyVertex* target, float size)
+{
+    float r = size / 2.0f;
+
+    // Front face (+Z)
+    target->position = { -r,  r,  r }; target++;
+    target->position = { -r, -r,  r }; target++;
+    target->position = { r, -r,  r }; target++;
+    target->position = { r,  r,  r }; target++;
+
+    // Back face (-Z)
+    target->position = { r,  r, -r }; target++;
+    target->position = { r, -r, -r }; target++;
+    target->position = { -r, -r, -r }; target++;
+    target->position = { -r,  r, -r }; target++;
+
+    // Right face (+X)
+    target->position = { r,  r,  r }; target++;
+    target->position = { r, -r,  r }; target++;
+    target->position = { r, -r, -r }; target++;
+    target->position = { r,  r, -r }; target++;
+
+    // Left face (-X)
+    target->position = { -r,  r, -r }; target++;
+    target->position = { -r, -r, -r }; target++;
+    target->position = { -r, -r,  r }; target++;
+    target->position = { -r,  r,  r }; target++;
+
+    // Top face (+Y)
+    target->position = { -r,  r,  r }; target++;
+    target->position = { -r,  r, -r }; target++;
+    target->position = { r,  r, -r }; target++;
+    target->position = { r,  r,  r }; target++;
+
+    // Bottom face (-Y)
+    target->position = { -r, -r, -r }; target++;
+    target->position = { -r, -r,  r }; target++;
+    target->position = { r, -r,  r }; target++;
+    target->position = { r, -r, -r }; target++;
+
+    return target;
+}
+
+
 vertex* BasicModels::CreatePlaneVertexs(vertex* target, vec2 size, vec3 normal)
 {
     float hx = size.x / 2.0f;
