@@ -1,37 +1,51 @@
-#pragma once
+﻿#pragma once
 #include <vector>
-struct vec2 {
-    float x, y;
-};
+#include <array>
 
-struct vec3 {
-    float x, y, z;
-};
+namespace BasicModel {
+    struct vec2 {
+        float x, y;
+    };
 
-struct vec4 {
-    float x, y, z, w;
-};
+    struct vec3 {
+        float x, y, z;
+    };
 
-struct vertex {
-    vec3 position;
-    vec3 normal;
-    vec2 texCoord;
-};
+    struct vec4 {
+        float x, y, z, w;
+    };
 
-struct skyVertex {
-    vec3 position;
-};
+    struct Vertex {
+        vec3 position;
+        vec3 normal;
+        vec2 texCoord;
+    };
 
-class BasicModels
-{
-public:
-    vertex* CreateCubeVertexs(vertex* target, float size);
-    std::vector<unsigned int> CreateCubeIndices(std::vector<unsigned int> indices);
+    struct ScrVertex {
+        vec2 position;
+        vec2 texCoord;
+    };
 
-    skyVertex* CreateSkyBoxVertexs(skyVertex* target, float size);
-    std::vector<unsigned int> CreateSkyBoxIndices(std::vector<unsigned int> indices);
+    struct skyVertex {
+        vec3 position;
+    };
 
-    vertex* CreatePlaneVertexs(vertex* target, vec2 size, vec3 normal);
-    std::vector<unsigned int> CreatePlaneIndices(std::vector<unsigned int> indices);
+    class BasicModels
+    {
+    public:
+        //立方体（坐标：法线：纹理坐标）
+        std::array<Vertex, 24> CreateCubeVertexs(float size);
+        std::vector<unsigned int> CreateCubeIndices();
 
-};
+        //天空盒（坐标）
+        std::array<skyVertex, 24> CreateSkyBoxVertexs();
+        std::vector<unsigned int> CreateSkyBoxIndices();
+
+        //平面（坐标：法线：纹理坐标）
+        std::array<Vertex, 4> CreatePlaneVertexs(vec2 size, vec3 normal);
+        std::vector<unsigned int> CreatePlaneIndices();
+
+        //屏幕平面（坐标：纹理坐标）
+        std::vector<float> GetScrVertex();
+    };
+}

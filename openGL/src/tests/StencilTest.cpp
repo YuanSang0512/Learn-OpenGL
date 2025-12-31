@@ -24,23 +24,20 @@ namespace test
         GLCall(glEnable(GL_BLEND));
 
         //光源
-        BasicModels basicModels;
-        std::vector<unsigned int> indices(36);
-        indices = basicModels.CreateCubeIndices(indices);
+        BasicModel::BasicModels basicModels;
 
-        std::array<vertex, 24> vertices;
-        vertex* buffer = vertices.data();
-        buffer = basicModels.CreateCubeVertexs(buffer, 300.0f);
+        std::array<BasicModel::Vertex, 24> vertices = basicModels.CreateCubeVertexs(300.0f);
+        std::vector<unsigned int> indices = basicModels.CreateCubeIndices();
 
         m_IndexBuffer = std::make_unique<IndexBuffer>(indices.data(), 36);
 
         //光源
-        m_LightVBO = std::make_unique<VertexBuffer>(vertices.data(), 24 * sizeof(vertex), false);
+        m_LightVBO = std::make_unique<VertexBuffer>(vertices.data(), 24 * sizeof(BasicModel::Vertex), false);
         m_LightVAO = std::make_unique<VertexArray>();
         m_LightShader = std::make_unique<Shader>("res/shaders/LightCube.shader");
 
         //物体
-        m_ObjectVBO = std::make_unique<VertexBuffer>(vertices.data(), 24 * sizeof(vertex), false);
+        m_ObjectVBO = std::make_unique<VertexBuffer>(vertices.data(), 24 * sizeof(BasicModel::Vertex), false);
         m_ObjectVAO = std::make_unique<VertexArray>();
         m_ObjectShader = std::make_unique<Shader>("res/shaders/Cube.shader");
 

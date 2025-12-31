@@ -23,29 +23,23 @@ namespace test
         GLCall(glEnable(GL_DEPTH_TEST));
         GLCall(glEnable(GL_BLEND));
 
-        BasicModels basicModels;
+        BasicModel::BasicModels basicModels;
 
-        std::array<vertex, 24> vertices_object;
-        vertex* buffer = vertices_object.data();
-        buffer = basicModels.CreateCubeVertexs(buffer, 300.0f);
-        std::vector<unsigned int> indices_object(36);
-        indices_object = basicModels.CreateCubeIndices(indices_object);
+        std::array<BasicModel::skyVertex, 24> vertices_object = basicModels.CreateSkyBoxVertexs();
+        std::vector<unsigned int> indices_object = basicModels.CreateSkyBoxIndices();
 
-		std::array<vertex, 4> vertices_grass;
-		vertex* buffer_grass = vertices_grass.data();
-		buffer_grass = basicModels.CreatePlaneVertexs(buffer_grass, { 300.0f,300.0f }, { 0.0f,0.0f,1.0f });
-		std::vector<unsigned int> indices_grass(6);
-		indices_grass = basicModels.CreatePlaneIndices(indices_grass);
+        std::array<BasicModel::Vertex, 24> vertices_grass = basicModels.CreateCubeVertexs(300.0f);
+        std::vector<unsigned int> indices_grass = basicModels.CreateCubeIndices();
 
         //物体
         m_ObjectVAO = std::make_unique<VertexArray>();
-        m_ObjectVBO = std::make_unique<VertexBuffer>(vertices_object.data(), 24 * sizeof(vertex), false);
+        m_ObjectVBO = std::make_unique<VertexBuffer>(vertices_object.data(), 24 * sizeof(BasicModel::Vertex), false);
         m_ObjectEBO = std::make_unique<IndexBuffer>(indices_object.data(), 36);
         m_ObjectShader = std::make_unique<Shader>("res/shaders/Cube.shader");
 
 		//草地纹理
 		m_GrassVAO = std::make_unique<VertexArray>();
-		m_GrassVBO = std::make_unique<VertexBuffer>(vertices_grass.data(), 4 * sizeof(vertex), false);
+		m_GrassVBO = std::make_unique<VertexBuffer>(vertices_grass.data(), 4 * sizeof(BasicModel::Vertex), false);
         m_GrassEBO = std::make_unique<IndexBuffer>(indices_grass.data(), 6);
         m_GrassTexture = std::make_unique<Texture>("res/textures/grass.png", TextureType::TEXTURE_2D);
 		m_GrassShader = std::make_unique<Shader>("res/shaders/BlendingTest.shader");

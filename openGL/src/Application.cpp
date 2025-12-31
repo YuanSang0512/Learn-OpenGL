@@ -11,6 +11,7 @@
 #include "VertexBufferLayout.h"
 #include "Texture.h"
 #include "InputProcess.h"
+#include "config.h"
 
 #include "tests/TestClearColor.h"
 #include "tests/TestTexture2D.h"
@@ -25,6 +26,7 @@
 #include "tests/StencilTest.h"
 #include "tests/BlendingTest.h"
 #include "tests/SkyBoxTest.h"
+#include "tests/FrameBufferTest.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -37,8 +39,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 }
 
 void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
-    //std::cout << "Mouse moved to (" << xpos << ", " << ypos << ")" << std::endl;
-    //std::cout << mouseState.diff_x << ", " << mouseState.diff_y << std::endl;
 	mouseState.diff_x = xpos - mouseState.x;
 	mouseState.diff_y = ypos - mouseState.y;
 	mouseState.x = xpos;
@@ -78,18 +78,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
-//namespace fs = std::filesystem;
-//fs::path g_ResourceRoot;
-
 int main(int argc, char** argv)
 {
-    //// exe 所在目录
-    //fs::path exeDir = fs::absolute(argv[0]).parent_path();
-    //// exeDir = E:/VS project/openGL/x64/Debug
-
-    //// 回到项目根目录
-    //fs::path projectRoot = exeDir.parent_path().parent_path().parent_path();
-
     #pragma region 初始化
 
     //初始化glfw
@@ -99,7 +89,7 @@ int main(int argc, char** argv)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     //创建GLFW窗口
-    GLFWwindow* window = glfwCreateWindow(1500, 1500, "Open_GL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Open_GL", NULL, NULL);
     //设置上下文
     glfwMakeContextCurrent(window);
     if (glewInit() != GLEW_OK) { exit(EXIT_FAILURE); }
@@ -121,7 +111,6 @@ int main(int argc, char** argv)
         std::cout << "CWD = "
             << std::filesystem::current_path()
             << std::endl;
-        //system("pause");
 
         test::Test* currentTest = nullptr;
         test::TestMenu* testMenu = new test::TestMenu(currentTest);
@@ -140,6 +129,7 @@ int main(int argc, char** argv)
         testMenu->RegisterTest<test::StencilTest>("StencilTest");
         testMenu->RegisterTest<test::BlendingTest>("BlendingTest");
 		testMenu->RegisterTest<test::SkyBoxTest>("SkyBoxTest");
+        testMenu->RegisterTest<test::FrameBufferTest>("FreamBufferTest");
 
         //回调函数
         glfwSetKeyCallback(window, key_callback);
@@ -167,6 +157,7 @@ int main(int argc, char** argv)
                 {
                     delete currentTest;
                     currentTest = testMenu;
+                    system("cls");
                 }
                 currentTest->OnImGuiRender();
 

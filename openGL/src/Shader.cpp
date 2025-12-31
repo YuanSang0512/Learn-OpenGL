@@ -42,6 +42,7 @@ unsigned int Shader::CreateShader(const std::string& vertexShader, const std::st
 /// <param name="filePath">文件路径</param>
 ShaderProgramSource Shader::ParseShader(const std::string& filePath)
 {
+    std::cout << filePath << std::endl;
     std::ifstream stream(filePath);
 
     //shder文件枚举类型
@@ -92,7 +93,9 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
         char* message = (char*)alloca(length * sizeof(char));
         glGetShaderInfoLog(id, length, &length, message);
+        std::cout << "==================================================" << std::endl;
         std::cout << "Failed to compile " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << std::endl;
+        std::cout << "==================================================" << std::endl;
         std::cout << message << std::endl;
         glDeleteShader(id);
         return 0;
@@ -155,7 +158,11 @@ int Shader::GetUniformLocation(const std::string& name)
         return m_UniformLocationCach[name];
     GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
     if (location == -1)
+    {
+        std::cout << "==================================================" << std::endl;
         std::cout << "Warning: uniform '" << name << "' doesn't exist!" << std::endl;
+        std::cout << "==================================================" << std::endl;
+    }
     m_UniformLocationCach[name] = location;
     return location;
 }

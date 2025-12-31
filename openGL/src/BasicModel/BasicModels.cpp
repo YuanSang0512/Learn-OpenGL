@@ -1,24 +1,25 @@
-#include "BasicModels.h"
+ï»¿#include "BasicModels.h"
 
-vertex* BasicModels::CreateCubeVertexs(vertex* target, float size)
+std::array<BasicModel::Vertex, 24> BasicModel::BasicModels::CreateCubeVertexs(float size)
 {
+    std::array<Vertex, 24> vertices;
+    Vertex* target = vertices.data();
     float r = size / 2.0f;
 
-    // ³£ÓÃÎÆÀí×ø±ê
     vec2 uv0 = { 0.0f, 0.0f };
     vec2 uv1 = { 1.0f, 0.0f };
     vec2 uv2 = { 1.0f, 1.0f };
     vec2 uv3 = { 0.0f, 1.0f };
 
     // Front face (+Z)
-    vec3 frontNormal = { 0.0f, 0.0f, -1.0f };
+    vec3 frontNormal = { 0.0f, 0.0f, 1.0f };
     target->position = { r,  r, -r }; target->normal = frontNormal; target->texCoord = uv2; target++;
     target->position = { -r,  r, -r }; target->normal = frontNormal; target->texCoord = uv3; target++;
     target->position = { -r, -r, -r }; target->normal = frontNormal; target->texCoord = uv0; target++;
     target->position = { r, -r, -r }; target->normal = frontNormal; target->texCoord = uv1; target++;
 
     // Back face (-Z)
-    vec3 backNormal = { 0.0f, 0.0f, 1.0f };
+    vec3 backNormal = { 0.0f, 0.0f, -1.0f };
     target->position = { r,  r,  r }; target->normal = backNormal; target->texCoord = uv2; target++;
     target->position = { -r,  r,  r }; target->normal = backNormal; target->texCoord = uv3; target++;
     target->position = { -r, -r,  r }; target->normal = backNormal; target->texCoord = uv0; target++;
@@ -52,134 +53,129 @@ vertex* BasicModels::CreateCubeVertexs(vertex* target, float size)
     target->position = { -r, -r,  r }; target->normal = bottomNormal; target->texCoord = uv0; target++;
     target->position = { r, -r,  r }; target->normal = bottomNormal; target->texCoord = uv1; target++;
 
-    return target;
+    return vertices;
 }
-
-std::vector<unsigned int> BasicModels::CreateCubeIndices(std::vector<unsigned int> indices)
+std::vector<unsigned int> BasicModel::BasicModels::CreateCubeIndices()
 {
+    std::vector<unsigned int> indices(36, 0);
     int offset = 0;
-    for (int i = 0; i < indices.size(); i += 36)
-    {
-        // Front face
-        indices[i + 0] = 0 + offset; indices[i + 1] = 1 + offset; indices[i + 2] = 2 + offset;
-        indices[i + 3] = 2 + offset; indices[i + 4] = 3 + offset; indices[i + 5] = 0 + offset;
 
-        // Back face
-        indices[i + 6] = 4 + offset; indices[i + 7] = 5 + offset; indices[i + 8] = 6 + offset;
-        indices[i + 9] = 6 + offset; indices[i + 10] = 7 + offset; indices[i + 11] = 4 + offset;
+    // Front face
+    indices[0] = 0 + offset; indices[1] = 1 + offset; indices[2] = 2 + offset;
+    indices[3] = 2 + offset; indices[4] = 3 + offset; indices[5] = 0 + offset;
 
-        // Right face
-        indices[i + 12] = 8 + offset; indices[i + 13] = 9 + offset; indices[i + 14] = 10 + offset;
-        indices[i + 15] = 10 + offset; indices[i + 16] = 11 + offset; indices[i + 17] = 8 + offset;
+    // Back face
+    indices[6] = 4 + offset; indices[7] = 5 + offset; indices[8] = 6 + offset;
+    indices[9] = 6 + offset; indices[10] = 7 + offset; indices[11] = 4 + offset;
 
-        // Left face
-        indices[i + 18] = 12 + offset; indices[i + 19] = 13 + offset; indices[i + 20] = 14 + offset;
-        indices[i + 21] = 14 + offset; indices[i + 22] = 15 + offset; indices[i + 23] = 12 + offset;
+    // Right face
+    indices[12] = 8 + offset; indices[13] = 9 + offset; indices[14] = 10 + offset;
+    indices[15] = 10 + offset; indices[16] = 11 + offset; indices[17] = 8 + offset;
 
-        // Top face
-        indices[i + 24] = 16 + offset; indices[i + 25] = 17 + offset; indices[i + 26] = 18 + offset;
-        indices[i + 27] = 18 + offset; indices[i + 28] = 19 + offset; indices[i + 29] = 16 + offset;
+    // Left face
+    indices[18] = 12 + offset; indices[19] = 13 + offset; indices[20] = 14 + offset;
+    indices[21] = 14 + offset; indices[22] = 15 + offset; indices[23] = 12 + offset;
 
-        // Bottom face
-        indices[i + 30] = 20 + offset; indices[i + 31] = 21 + offset; indices[i + 32] = 22 + offset;
-        indices[i + 33] = 22 + offset; indices[i + 34] = 23 + offset; indices[i + 35] = 20 + offset;
+    // Top face
+    indices[24] = 16 + offset; indices[25] = 17 + offset; indices[26] = 18 + offset;
+    indices[27] = 18 + offset; indices[28] = 19 + offset; indices[29] = 16 + offset;
 
-        offset += 24;
-    }
+    // Bottom face
+    indices[30] = 20 + offset; indices[31] = 21 + offset; indices[32] = 22 + offset;
+    indices[33] = 22 + offset; indices[34] = 23 + offset; indices[35] = 20 + offset;
+
     return indices;
 }
 
-std::vector<unsigned int> BasicModels::CreateSkyBoxIndices(std::vector<unsigned int> indices)
+std::array<BasicModel::skyVertex, 24> BasicModel::BasicModels::CreateSkyBoxVertexs()
 {
-    int offset = 0;
-    for (int i = 0; i < indices.size(); i += 36)
-    {
-        // Front face
-        indices[i + 0] = 0 + offset; indices[i + 1] = 1 + offset; indices[i + 2] = 2 + offset;
-        indices[i + 3] = 2 + offset; indices[i + 4] = 3 + offset; indices[i + 5] = 0 + offset;
-
-        // Back face
-        indices[i + 6] = 4 + offset; indices[i + 7] = 5 + offset; indices[i + 8] = 6 + offset;
-        indices[i + 9] = 6 + offset; indices[i + 10] = 7 + offset; indices[i + 11] = 4 + offset;
-
-        // Right face
-        indices[i + 12] = 8 + offset; indices[i + 13] = 9 + offset; indices[i + 14] = 10 + offset;
-        indices[i + 15] = 10 + offset; indices[i + 16] = 11 + offset; indices[i + 17] = 8 + offset;
-
-        // Left face
-        indices[i + 18] = 12 + offset; indices[i + 19] = 13 + offset; indices[i + 20] = 14 + offset;
-        indices[i + 21] = 14 + offset; indices[i + 22] = 15 + offset; indices[i + 23] = 12 + offset;
-
-        // Top face
-        indices[i + 24] = 16 + offset; indices[i + 25] = 17 + offset; indices[i + 26] = 18 + offset;
-        indices[i + 27] = 18 + offset; indices[i + 28] = 19 + offset; indices[i + 29] = 16 + offset;
-
-        // Bottom face
-        indices[i + 30] = 20 + offset; indices[i + 31] = 21 + offset; indices[i + 32] = 22 + offset;
-        indices[i + 33] = 22 + offset; indices[i + 34] = 23 + offset; indices[i + 35] = 20 + offset;
-
-        offset += 24;
-    }
-    return indices;
-}
-
-skyVertex* BasicModels::CreateSkyBoxVertexs(skyVertex* target, float size)
-{
-    float r = size / 2.0f;
+    std::array<skyVertex, 24> vertices;
+    skyVertex* target = vertices.data();
 
     // Front face (+Z)
-    target->position = { -r,  r,  r }; target++;
-    target->position = { -r, -r,  r }; target++;
-    target->position = { r, -r,  r }; target++;
-    target->position = { r,  r,  r }; target++;
+    target->position = { -1,  1,  1 }; target++;
+    target->position = { -1, -1,  1 }; target++;
+    target->position = {  1, -1,  1 }; target++;
+    target->position = {  1,  1,  1 }; target++;
 
     // Back face (-Z)
-    target->position = { r,  r, -r }; target++;
-    target->position = { r, -r, -r }; target++;
-    target->position = { -r, -r, -r }; target++;
-    target->position = { -r,  r, -r }; target++;
+    target->position = {  1,  1, -1 }; target++;
+    target->position = {  1, -1, -1 }; target++;
+    target->position = { -1, -1, -1 }; target++;
+    target->position = { -1,  1, -1 }; target++;
 
     // Right face (+X)
-    target->position = { r,  r,  r }; target++;
-    target->position = { r, -r,  r }; target++;
-    target->position = { r, -r, -r }; target++;
-    target->position = { r,  r, -r }; target++;
+    target->position = { 1,  1,  1 }; target++;
+    target->position = { 1, -1,  1 }; target++;
+    target->position = { 1, -1, -1 }; target++;
+    target->position = { 1,  1, -1 }; target++;
 
     // Left face (-X)
-    target->position = { -r,  r, -r }; target++;
-    target->position = { -r, -r, -r }; target++;
-    target->position = { -r, -r,  r }; target++;
-    target->position = { -r,  r,  r }; target++;
+    target->position = { -1,  1, -1 }; target++;
+    target->position = { -1, -1, -1 }; target++;
+    target->position = { -1, -1,  1 }; target++;
+    target->position = { -1,  1,  1 }; target++;
 
     // Top face (+Y)
-    target->position = { -r,  r,  r }; target++;
-    target->position = { -r,  r, -r }; target++;
-    target->position = { r,  r, -r }; target++;
-    target->position = { r,  r,  r }; target++;
+    target->position = { -1,  1,  1 }; target++;
+    target->position = { -1,  1, -1 }; target++;
+    target->position = {  1,  1, -1 }; target++;
+    target->position = {  1,  1,  1 }; target++;
 
     // Bottom face (-Y)
-    target->position = { -r, -r, -r }; target++;
-    target->position = { -r, -r,  r }; target++;
-    target->position = { r, -r,  r }; target++;
-    target->position = { r, -r, -r }; target++;
+    target->position = { -1, -1, -1 }; target++;
+    target->position = { -1, -1,  1 }; target++;
+    target->position = {  1, -1,  1 }; target++;
+    target->position = {  1, -1, -1 }; target++;
 
-    return target;
+    return vertices;
+}
+std::vector<unsigned int> BasicModel::BasicModels::CreateSkyBoxIndices()
+{
+    std::vector<unsigned int> indices(36, 0);
+    int offset = 0;
+
+    // Front face
+    indices[0] = 0 + offset; indices[1] = 1 + offset; indices[2] = 2 + offset;
+    indices[3] = 2 + offset; indices[4] = 3 + offset; indices[5] = 0 + offset;
+
+    // Back face
+    indices[6] = 4 + offset; indices[7] = 5 + offset; indices[8] = 6 + offset;
+    indices[9] = 6 + offset; indices[10] = 7 + offset; indices[11] = 4 + offset;
+
+    // Right face
+    indices[12] = 8 + offset; indices[13] = 9 + offset; indices[14] = 10 + offset;
+    indices[15] = 10 + offset; indices[16] = 11 + offset; indices[17] = 8 + offset;
+
+    // Left face
+    indices[18] = 12 + offset; indices[19] = 13 + offset; indices[20] = 14 + offset;
+    indices[21] = 14 + offset; indices[22] = 15 + offset; indices[23] = 12 + offset;
+
+    // Top face
+    indices[24] = 16 + offset; indices[25] = 17 + offset; indices[26] = 18 + offset;
+    indices[27] = 18 + offset; indices[28] = 19 + offset; indices[29] = 16 + offset;
+
+    // Bottom face
+    indices[30] = 20 + offset; indices[31] = 21 + offset; indices[32] = 22 + offset;
+    indices[33] = 22 + offset; indices[34] = 23 + offset; indices[35] = 20 + offset;
+
+    return indices;
 }
 
-
-vertex* BasicModels::CreatePlaneVertexs(vertex* target, vec2 size, vec3 normal)
+std::array<BasicModel::Vertex, 4> BasicModel::BasicModels::CreatePlaneVertexs(vec2 size, vec3 normal)
 {
+    std::array<Vertex, 4> vertices;
+    Vertex* target = vertices.data(); 
     float hx = size.x / 2.0f;
     float hy = size.y / 2.0f;
 
-    // ³£ÓÃÎÆÀí×ø±ê
-    vec2 uv0 = { 0.0f, 0.0f };
-    vec2 uv1 = { 1.0f, 0.0f };
-    vec2 uv2 = { 1.0f, 1.0f };
-    vec2 uv3 = { 0.0f, 1.0f };
+   vec2 uv0 = { 0.0f, 0.0f };
+   vec2 uv1 = { 1.0f, 0.0f };
+   vec2 uv2 = { 1.0f, 1.0f };
+   vec2 uv3 = { 0.0f, 1.0f };
 
-    // ÅÐ¶Ï normal ³¯Ïò£¬Éú³É¶ÔÓ¦Æ½Ãæ
-    if (normal.x != 0.0f) // YZ Æ½Ãæ
+    // åˆ¤æ–­ normal æœå‘ï¼Œç”Ÿæˆå¯¹åº”å¹³é¢
+    if (normal.x != 0.0f) // YZ å¹³é¢
     {
         float dir = (normal.x > 0) ? 1.0f : -1.0f;
         target->position = { dir * 0.0f,  hy, -hx }; target->normal = normal; target->texCoord = uv2; target++;
@@ -187,7 +183,7 @@ vertex* BasicModels::CreatePlaneVertexs(vertex* target, vec2 size, vec3 normal)
         target->position = { dir * 0.0f, -hy,  hx }; target->normal = normal; target->texCoord = uv0; target++;
         target->position = { dir * 0.0f, -hy, -hx }; target->normal = normal; target->texCoord = uv1; target++;
     }
-    else if (normal.y != 0.0f) // XZ Æ½Ãæ
+    else if (normal.y != 0.0f) // XZ å¹³é¢
     {
         float dir = (normal.y > 0) ? 1.0f : -1.0f;
         target->position = { hx, dir * 0.0f, -hy }; target->normal = normal; target->texCoord = uv2; target++;
@@ -195,7 +191,7 @@ vertex* BasicModels::CreatePlaneVertexs(vertex* target, vec2 size, vec3 normal)
         target->position = { -hx, dir * 0.0f,  hy }; target->normal = normal; target->texCoord = uv0; target++;
         target->position = { hx, dir * 0.0f,  hy }; target->normal = normal; target->texCoord = uv1; target++;
     }
-    else // XY Æ½Ãæ (normal z != 0)
+    else // XY å¹³é¢ (normal z != 0)
     {
         float dir = (normal.z > 0) ? 1.0f : -1.0f;
         target->position = { hx,  hy, dir * 0.0f }; target->normal = normal; target->texCoord = uv2; target++;
@@ -204,18 +200,29 @@ vertex* BasicModels::CreatePlaneVertexs(vertex* target, vec2 size, vec3 normal)
         target->position = { hx, -hy, dir * 0.0f }; target->normal = normal; target->texCoord = uv1; target++;
     }
 
-    return target;
+    return vertices;
+}
+std::vector<unsigned int> BasicModel::BasicModels::CreatePlaneIndices()
+{
+    std::vector<unsigned int> indices(6, 0);
+    int offset = 0;
+
+    indices[0] = 0 + offset; indices[1] = 1 + offset; indices[2] = 2 + offset;
+    indices[3] = 2 + offset; indices[4] = 3 + offset; indices[5] = 0 + offset;
+
+    return indices;
 }
 
-std::vector<unsigned int> BasicModels::CreatePlaneIndices(std::vector<unsigned int> indices)
+std::vector<float> BasicModel::BasicModels::GetScrVertex()
 {
-    int offset = 0;
-    for (int i = 0; i < indices.size(); i += 6)
-    {
-        indices[i + 0] = 0 + offset; indices[i + 1] = 1 + offset; indices[i + 2] = 2 + offset;
-        indices[i + 3] = 2 + offset; indices[i + 4] = 3 + offset; indices[i + 5] = 0 + offset;
+    std::vector<float> quadVertices = {
+    -1.0f,  1.0f,  0.0f, 1.0f,
+    -1.0f, -1.0f,  0.0f, 0.0f,
+     1.0f, -1.0f,  1.0f, 0.0f,
 
-        offset += 4; // Ã¿¸öÆ½ÃæÖ»ÓÐ 4 ¸ö¶¥µã
-    }
-    return indices;
+    -1.0f,  1.0f,  0.0f, 1.0f,
+     1.0f, -1.0f,  1.0f, 0.0f,
+     1.0f,  1.0f,  1.0f, 1.0f
+    };
+    return quadVertices;
 }

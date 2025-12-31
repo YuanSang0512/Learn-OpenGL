@@ -1,13 +1,15 @@
 #pragma once
 
 #include "Renderer.h"
+#include "config.h"
 #include <vector>
 #include <string>
 
 enum class TextureType
 {
 	TEXTURE_2D,
-	TEXTURE_CUBE_MAP
+	TEXTURE_CUBE_MAP,
+	TEXTURE_FRAMEBUFFER
 };
 
 class Texture

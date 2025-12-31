@@ -12,17 +12,19 @@
 #include "Shader.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
+#include "FrameBuffer.h"
+#include "RenderBuffer.h"
 #include "Model.h"
 
 #include <memory>
 
 namespace test
 {
-	class SkyBoxTest : public Test
+	class FrameBufferTest : public Test
 	{
 	public:
-		SkyBoxTest();
-		~SkyBoxTest();
+		FrameBufferTest();
+		~FrameBufferTest();
 
 		void OnUpdate(float deltaTime) override;
 		void OnRender() override;
@@ -30,32 +32,39 @@ namespace test
 
 		Camera cam;
 	private:
-		#pragma region Camera
+#pragma region Camera
 		float fov = glm::radians(80.0f); // 视野角度
 		float aspect = (float)800 / 800; // 屏幕宽高比
 		float nearPlane = 0.1f;
 		float farPlane = 1500.0f;
-		#pragma endregion
+#pragma endregion
 
 		//天空盒
-		std::unique_ptr<VertexBuffer> m_SkyBoxVBO;
 		std::unique_ptr<VertexArray> m_SkyBoxVAO;
-		std::unique_ptr<Shader> m_SkyBoxShader;
+		std::unique_ptr<VertexBuffer> m_SkyBoxVBO;
 		std::unique_ptr<IndexBuffer> m_SkyBoxEBO;
 		std::unique_ptr<Texture> m_SkyBoxTexture;
+		std::unique_ptr<Shader> m_SkyBoxShader;
 		//立方体
 		bool Cube = true;
-		std::unique_ptr<VertexBuffer> m_ObjectVBO;
-		std::unique_ptr<VertexArray> m_ObjectVAO;
-		std::unique_ptr<Shader> m_ObjectShader;
-		std::unique_ptr<IndexBuffer> m_ObjectEBO;
-		std::unique_ptr<Texture> m_ObjectTexture;
+		std::unique_ptr<VertexArray> m_ModelVAO;
+		std::unique_ptr<VertexBuffer> m_ModelVBO;
+		std::unique_ptr<IndexBuffer> m_ModelEBO;
+		std::unique_ptr<Texture> m_ModelTexture;
+		std::unique_ptr<Shader> m_ReflectShader;
 
-		//Shader
-		std::unique_ptr<Shader> m_NormalShader;
+		//屏幕平面
+		std::unique_ptr<VertexArray> m_ScrVAO;
+		std::unique_ptr<VertexBuffer> m_ScrVBO;
+		std::unique_ptr<Shader> m_PassShader;
+		//帧缓冲
+		std::unique_ptr<FrameBuffer> m_FBO;
+		std::unique_ptr<Texture> m_FOBTexture;
+		std::unique_ptr<RenderBuffer> m_RBO;
 
 		//模型
 		Model backpack = Model("E:/VS project/openGL/openGL/res/models/backpack/backpack.obj");
+		std::unique_ptr<Shader> m_NormalShader;
 		//Model backpack = Model("E:/VS project/openGL/openGL/res/models/nanosuit/nanosuit.obj");
 
 		glm::vec3 modelPos;

@@ -66,6 +66,15 @@ Texture::Texture(const std::string& path, TextureType type)
 		}
 		GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
 	}
+	else if (m_Type == TextureType::TEXTURE_FRAMEBUFFER)
+	{
+		GLCall(glGenTextures(1, &m_RendererID));
+		GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
+		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_RendererID, 0);
+	}
 }
 
 Texture::~Texture()
@@ -75,19 +84,30 @@ Texture::~Texture()
 
 void Texture::Bind(unsigned int slot) const
 {
-	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
 	if (m_Type == TextureType::TEXTURE_CUBE_MAP)
 	{
+		GLCall(glActiveTexture(GL_TEXTURE0 + slot));
 		GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererID));
 	}
-	else if (m_Type == TextureType::TEXTURE_2D)
+	else if (m_Type == TextureType::TEXTURE_2D || m_Type == TextureType::TEXTURE_FRAMEBUFFER)
 	{
+		GLCall(glActiveTexture(GL_TEXTURE0 + slot));
 		GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
 	}
-
 }
 
 void Texture::Unbind() const
 {
-	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+	if (m_Type == TextureType::TEXTURE_CUBE_MAP)
+	{
+		GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
+	}
+	else if (m_Type == TextureType::TEXTURE_2D)
+	{
+		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+	}
+	else if (m_Type == TextureType::TEXTURE_FRAMEBUFFER)
+	{
+		GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+	}
 }

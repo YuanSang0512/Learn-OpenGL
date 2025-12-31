@@ -108,6 +108,15 @@
     <ClCompile Include="src\tests\SkyBoxTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\tests\FrameBufferTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FrameBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
@@ -123,6 +132,8 @@
     <None Include="res\shaders\Cube.shader" />
     <None Include="res\shaders\BlendingTest.shader" />
     <None Include="res\shaders\SkyBox.shader" />
+    <None Include="res\shaders\CubeReflex.shader" />
+    <None Include="res\shaders\FrameBufferShaders\Pass.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -225,6 +236,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\tests\SkyBoxTest.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tests\FrameBufferTest.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FrameBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderBuffer.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

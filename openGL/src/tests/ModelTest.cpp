@@ -21,16 +21,13 @@ namespace test
         GLCall(glEnable(GL_BLEND));
 
 		//π‚‘¥
-        BasicModels basicModels;
-		std::vector<unsigned int> indices(36);
-		indices = basicModels.CreateCubeIndices(indices);
+        BasicModel::BasicModels basicModels;
 
-        std::array<vertex, 24> vertices;
-        vertex* buffer = vertices.data();
-        buffer = basicModels.CreateCubeVertexs(buffer, 300.0f);
+        std::array<BasicModel::Vertex, 24> vertices = basicModels.CreateCubeVertexs(300.0f);
+        std::vector<unsigned int> indices = basicModels.CreateCubeIndices();
 
 		m_IndexBuffer = std::make_unique<IndexBuffer>(indices.data(), 36);
-		m_LightVBO = std::make_unique<VertexBuffer>(vertices.data(), 24 * sizeof(vertex), false);
+		m_LightVBO = std::make_unique<VertexBuffer>(vertices.data(), 24 * sizeof(BasicModel::Vertex), false);
 		m_LightVAO = std::make_unique<VertexArray>();
 		m_LightShader = std::make_unique<Shader>("E:/VS project/openGL/openGL/res/shaders/LightCube.shader");
 		VertexBufferLayout layout;
