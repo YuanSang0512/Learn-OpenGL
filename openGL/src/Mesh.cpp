@@ -1,15 +1,17 @@
 #include "Mesh.h"
 #include <iostream>
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<TextureInfo> textures)
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<TextureInfo> textures, std::vector<glm::mat4> instanceMatrices, RendererType type)
 {
 	this->vertices = vertices;
 	this->indices = indices;
 	this->textures = textures;
+	this->instanceMatrices = instanceMatrices;
+	this->type = type;
 	//std::cout << vertices.size() << " vertices, " << indices.size() << " indices, " << textures.size() << " textures." << std::endl;
 	setupMesh();
 }
 
-void Mesh::Draw(Shader& shader)
+void Mesh::Draw(Shader& shader, RendererType m_Type, unsigned int instanceCount)
 {
 	Renderer renderer;
     unsigned int diffuseNr = 1;
@@ -31,7 +33,10 @@ void Mesh::Draw(Shader& shader)
     glActiveTexture(GL_TEXTURE0);
 
     // 绘制网格
-	renderer.Draw(*m_VAO, *m_EBO, shader);
+    if(m_Type == RendererType::Multiple)
+        renderer.DrawInstance(*m_VAO, *m_EBO, shader, instanceCount);
+    else
+        renderer.Draw(*m_VAO, *m_EBO, shader);
 	m_VAO->Unbind();
 }
 
@@ -39,7 +44,7 @@ void Mesh::Draw(Shader& shader)
 void Mesh::setupMesh()
 {
     m_VAO = std::make_unique<VertexArray>();
-    m_VBO = std::make_unique<VertexBuffer>(vertices.data(), vertices.size() * sizeof(Vertex), false);
+    m_VBO_Normal = std::make_unique<VertexBuffer>(vertices.data(), vertices.size() * sizeof(Vertex), false);
     m_EBO = std::make_unique<IndexBuffer>(indices.data(), indices.size());
 
 	m_VAO->Bind();
@@ -47,7 +52,18 @@ void Mesh::setupMesh()
     layout.Push<float>(3);//Position
     layout.Push<float>(3);//Normal
     layout.Push<float>(2);//TexCoord
-    m_VAO->AddBuffer(*m_VBO, layout);
+	m_VAO->AddBuffer(*m_VBO_Normal, layout);
 
-	//m_VAO->Unbind();
+    // 实例化矩阵 VBO
+    if (type == RendererType::Multiple)
+    {
+        if (instanceMatrices.empty())
+            std::cout << "Error: instanceMatrices empty!" << std::endl;
+        else
+        {
+            m_VBO_Instance = std::make_unique<VertexBuffer>(instanceMatrices.data(), instanceMatrices.size() * sizeof(glm::mat4), false);
+            // 绑定到 VAO 上，假设顶点属性 0/1/2 已经占用
+            m_VAO->AddInstanceBuffer(*m_VBO_Instance);
+        }
+    }
 }

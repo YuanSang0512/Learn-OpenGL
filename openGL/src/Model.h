@@ -8,25 +8,32 @@
 
 #include "Shader.h"
 #include "Mesh.h"
+#include "config.h"
+
 
 class Model
 {
 public:
-    /*  函数   */
-    Model(const char* path)
+	Model() {}
+    Model(const char* path, RendererType type = RendererType::Single, std::vector<glm::mat4> instanceMatrices = std::vector<glm::mat4>())
     {
+        this->instanceMatrices = instanceMatrices;
+		m_Type = type;
         loadModel(path);
     }
-    void Draw(Shader& shader);
+    void SetInstanceMatrices(std::vector<glm::mat4> matrices) { instanceMatrices = matrices; }
+    void Draw(Shader& shader, std::vector<glm::mat4> instanceMatrix = std::vector<glm::mat4>());
     std::vector<Mesh> meshes;
 private:
+    /* 渲染模式 */
+	RendererType m_Type;
     /*  模型数据  */
     std::string directory;
     std::vector<TextureInfo> textures_loaded;
-    /*  函数   */
+	std::vector<glm::mat4> instanceMatrices;
+
     void loadModel(std::string path);
     void processNode(aiNode* node, const aiScene* scene);
     Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-    std::vector<TextureInfo> loadMaterialTextures(aiMaterial* mat, aiTextureType type,
-        std::string typeName);
+    std::vector<TextureInfo> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 };

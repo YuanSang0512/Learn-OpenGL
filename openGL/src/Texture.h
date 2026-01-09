@@ -5,13 +5,6 @@
 #include <vector>
 #include <string>
 
-enum class TextureType
-{
-	TEXTURE_2D,
-	TEXTURE_CUBE_MAP,
-	TEXTURE_FRAMEBUFFER
-};
-
 class Texture
 {
 private:

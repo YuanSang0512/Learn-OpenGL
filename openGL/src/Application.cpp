@@ -2,6 +2,10 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <filesystem>
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "vendor/imgui/imgui.h"
+#include "vendor/imgui/imgui_impl_glfw_gl3.h"
 
 #include "Renderer.h"
 #include "Shader.h"
@@ -27,11 +31,8 @@
 #include "tests/BlendingTest.h"
 #include "tests/SkyBoxTest.h"
 #include "tests/FrameBufferTest.h"
+#include "tests/InstanceTest.h"
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "vendor/imgui/imgui.h"
-#include "vendor/imgui/imgui_impl_glfw_gl3.h"
 using namespace std;
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
@@ -96,7 +97,7 @@ int main(int argc, char** argv)
     //启用垂直同步
     glfwSwapInterval(1);
     glEnable(GL_DEPTH_TEST);
-#pragma endregion
+    #pragma endregion
 
     {
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
@@ -130,6 +131,7 @@ int main(int argc, char** argv)
         testMenu->RegisterTest<test::BlendingTest>("BlendingTest");
 		testMenu->RegisterTest<test::SkyBoxTest>("SkyBoxTest");
         testMenu->RegisterTest<test::FrameBufferTest>("FreamBufferTest");
+        testMenu->RegisterTest<test::InstanceTest>("InstanceTest");
 
         //回调函数
         glfwSetKeyCallback(window, key_callback);

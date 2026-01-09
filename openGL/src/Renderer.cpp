@@ -39,3 +39,18 @@ void Renderer::Draw(const VertexArray& va, const Shader& shader) const
     va.Bind();
     GLCall(glDrawArrays(GL_TRIANGLES, 0, 6));
 }
+
+/// <summary>
+/// 实例化绘制
+/// </summary>
+/// <param name="va"></param>
+/// <param name="ib"></param>
+/// <param name="shader"></param>
+/// <param name="instanceCount">绘制数量</param>
+void Renderer::DrawInstance(const VertexArray& va, const IndexBuffer& ib, const Shader& shader, unsigned int instanceCount) const
+{
+    shader.Bind();
+    va.Bind();
+    ib.Bind();
+    GLCall(glDrawElementsInstanced(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr, instanceCount));
+}

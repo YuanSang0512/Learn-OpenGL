@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <vector>
 #include <array>
+#include "glm/glm.hpp"
 
 namespace BasicModel {
     struct vec2 {
@@ -44,6 +45,8 @@ namespace BasicModel {
         //平面（坐标：法线：纹理坐标）
         std::array<Vertex, 4> CreatePlaneVertexs(vec2 size, vec3 normal);
         std::vector<unsigned int> CreatePlaneIndices();
+
+        //球体（坐标：法线：纹理坐标）
 
         //屏幕平面（坐标：纹理坐标）
         std::vector<float> GetScrVertex();

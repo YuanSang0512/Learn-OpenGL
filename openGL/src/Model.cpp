@@ -5,10 +5,10 @@
 
 unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma);
 
-void Model::Draw(Shader& shader)
+void Model::Draw(Shader& shader, std::vector<glm::mat4> instanceMatrix)
 {
     for (unsigned int i = 0; i < meshes.size(); i++)
-        meshes[i].Draw(shader);
+        meshes[i].Draw(shader, m_Type, instanceMatrix.size());
 }
 
 void Model::loadModel(std::string path)
@@ -91,11 +91,13 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
 	//std::cout << "Load " << textures.size() << " textures from mesh." << std::endl;
+	std::cout << "--------------------------------" << std::endl;
     std::cout << "Mesh vertices: " << vertices.size()
         << ", indices: " << indices.size()
         << ", textures: " << textures.size() << std::endl;
+    std::cout << "--------------------------------" << std::endl;
 
-    return Mesh(vertices, indices, textures);
+    return Mesh(vertices, indices, textures, instanceMatrices, m_Type);
 }
 
 /// <summary>
@@ -176,7 +178,9 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, boo
     }
     else
     {
+        std::cout << "================================" << path << std::endl;
         std::cout << "Texture failed to load at path: " << path << std::endl;
+        std::cout << "================================" << path << std::endl;
         stbi_image_free(data);
     }
 

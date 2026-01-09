@@ -1,4 +1,4 @@
-#include "VertexArray.h"
+ï»¿#include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "Renderer.h"
@@ -13,6 +13,11 @@ VertexArray::~VertexArray()
 	GLCall(glDeleteVertexArrays(1, &m_RendererID))
 }
 
+/// <summary>
+/// æ™®é€šé¡¶ç‚¹ç¼“å†²åŒºæ·»åŠ åˆ°é¡¶ç‚¹æ•°ç»„å¯¹è±¡ä¸­
+/// </summary>
+/// <param name="vb"></param>
+/// <param name="layout"></param>
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
 {
 	Bind();
@@ -22,13 +27,42 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 	for (int i = 0; i < elements.size(); i++)
 	{
 		const auto& element = elements[i];
-		GLCall(glEnableVertexAttribArray(i));//Æô¶¯Ö¸¶¨Ë÷ÒýµÄ¶¥µãÊôÐÔÊý×é£¨glVertexAttribPointer£©
-		//¹æ¶¨´«ÈëÊý¾ÝµÄ¶ÁÈ¡¹æÔò£¬Ò²¾ÍÊÇÊý×éº¬Òå£¨×ø±ê¡¢ÎÆÀíµÈ£©,Êµ¼ÊÉÏÊÇ½«vbo°ó¶¨µ½vao
-		GLCall(glVertexAttribPointer(i, element.count, element.type, 
+		GLCall(glEnableVertexAttribArray(i));//å¯åŠ¨æŒ‡å®šç´¢å¼•çš„é¡¶ç‚¹å±žæ€§æ•°ç»„ï¼ˆglVertexAttribPointerï¼‰
+		//è§„å®šä¼ å…¥æ•°æ®çš„è¯»å–è§„åˆ™ï¼Œä¹Ÿå°±æ˜¯æ•°ç»„å«ä¹‰ï¼ˆåæ ‡ã€çº¹ç†ç­‰ï¼‰,å®žé™…ä¸Šæ˜¯å°†vboç»‘å®šåˆ°vao
+		GLCall(glVertexAttribPointer(m_AttribIndex, element.count, element.type,
 			element.normalized, layout.GetStride(), (const void*)offset));
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
+		m_AttribIndex++;
 	}
 
+}
+
+/// <summary>
+/// å®žä¾‹åŒ–çŸ©é˜µç¼“å†²åŒºæ·»åŠ åˆ°é¡¶ç‚¹æ•°ç»„å¯¹è±¡ä¸­
+/// </summary>
+/// <param name="vbo"></param>
+/// <param name="startLocation"></param>
+void VertexArray::AddInstanceBuffer(const VertexBuffer& vb)
+{
+    Bind();
+	vb.Bind();
+
+    std::size_t vec4Size = sizeof(glm::vec4);
+
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        glEnableVertexAttribArray(m_AttribIndex);
+        glVertexAttribPointer(
+			m_AttribIndex,
+            4,
+            GL_FLOAT,
+            GL_FALSE,
+            sizeof(glm::mat4),
+            (void*)(i * vec4Size)
+        );
+        glVertexAttribDivisor(m_AttribIndex, 1);
+		m_AttribIndex++;
+    }
 }
 
 void VertexArray::Bind() const

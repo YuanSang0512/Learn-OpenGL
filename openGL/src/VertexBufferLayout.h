@@ -2,6 +2,8 @@
 #include <vector>
 #include <GL/glew.h>
 #include "Renderer.h"
+#include "glm/glm.hpp"
+#include "config.h"
 struct VertexBufferElement
 {
 	unsigned int type;
@@ -54,6 +56,18 @@ public:
 	{
 		m_Elements.push_back({ GL_UNSIGNED_BYTE, count, GL_TRUE });
 		m_Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE) * count;
+	}
+
+	//无论count是多少，每次仅插入一个矩阵
+	template<>
+	void Push<MATRIX>(unsigned int count)
+	{
+		// mat4 在 GPU 上是 4 列 vec4，每列算一个 attribute
+		for (unsigned int i = 0; i < 4; i++)
+		{
+			m_Elements.push_back({ GL_FLOAT, 4, GL_FALSE });
+			m_Stride += VertexBufferElement::GetSizeOfType(GL_FLOAT) * 4;
+		}
 	}
 
 	inline const std::vector<VertexBufferElement> GetElements() const { return m_Elements; }

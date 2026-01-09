@@ -117,6 +117,9 @@
     <ClCompile Include="src\RenderBuffer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\tests\InstanceTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
@@ -134,6 +137,9 @@
     <None Include="res\shaders\SkyBox.shader" />
     <None Include="res\shaders\CubeReflex.shader" />
     <None Include="res\shaders\FrameBufferShaders\Pass.shader" />
+    <None Include="res\shaders\InstanceTestShaders\Rock.shader" />
+    <None Include="res\shaders\InstanceTestShaders\Model_Normal.shader" />
+    <None Include="res\shaders\InstanceTestShaders\SkyBox.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -248,6 +254,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\RenderBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tests\InstanceTest.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

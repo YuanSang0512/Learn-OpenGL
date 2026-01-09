@@ -63,7 +63,7 @@ void main()
         vec3 viewDir = normalize(u_CamPos - m_FragPos);
         vec3 halfwayDir = normalize(lightDir + viewDir); // Blinn-Phong 使用半程向量
         float spec = pow(max(dot(norm, halfwayDir), 0.0), u_material.shininess);
-        f_specular = u_Light.specular * u_material.specular * spec;
+        f_specular = u_Light.specular * spec * u_material.specular;
     }
 
     // --- 最终颜色 ---
