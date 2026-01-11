@@ -32,6 +32,7 @@
 #include "tests/SkyBoxTest.h"
 #include "tests/FrameBufferTest.h"
 #include "tests/InstanceTest.h"
+#include "tests/NormalTextureTest.h"
 
 using namespace std;
 
@@ -132,6 +133,7 @@ int main(int argc, char** argv)
 		testMenu->RegisterTest<test::SkyBoxTest>("SkyBoxTest");
         testMenu->RegisterTest<test::FrameBufferTest>("FreamBufferTest");
         testMenu->RegisterTest<test::InstanceTest>("InstanceTest");
+        testMenu->RegisterTest<test::NormalTextureTest>("NormalTextureTest");
 
         //»Øµ÷º¯Êý
         glfwSetKeyCallback(window, key_callback);

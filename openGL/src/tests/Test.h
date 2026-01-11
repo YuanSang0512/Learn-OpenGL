@@ -12,6 +12,10 @@ namespace test {
 		virtual void OnUpdate(float deltaTime) {}
 		virtual void OnRender() {}
 		virtual void OnImGuiRender() {}
+
+		void LoadModel() {}
+		void LoadTexture() {}
+		void LoadShader() {}
 	};
 
 	class TestMenu : public Test

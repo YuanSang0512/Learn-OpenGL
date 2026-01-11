@@ -14,6 +14,8 @@ public:
 
 	void CameraUpdate(float deltaTime = 0.3f);
 
+	void SetCameraPos(glm::vec3 pos) { position = pos; }
+
 	glm::mat4 GetViewMatrix() {
 		return glm::lookAt(position, position + front, up);
 	}

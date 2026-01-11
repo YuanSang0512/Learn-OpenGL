@@ -152,10 +152,12 @@
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\tests\BasicTest.cpp" />
     <ClCompile Include="src\tests\BlendingTest.cpp" />
     <ClCompile Include="src\tests\CameraTest.cpp" />
     <ClCompile Include="src\tests\FrameBufferTest.cpp" />
     <ClCompile Include="src\tests\InstanceTest.cpp" />
+    <ClCompile Include="src\tests\NormalTextureTest.cpp" />
     <ClCompile Include="src\tests\SkyBoxTest.cpp" />
     <ClCompile Include="src\tests\DynamicVBO.cpp" />
     <ClCompile Include="src\tests\LightingMaps.cpp" />
@@ -188,6 +190,8 @@
     <None Include="res\shaders\InstanceTestShaders\Model_Normal.shader" />
     <None Include="res\shaders\InstanceTestShaders\Rock.shader" />
     <None Include="res\shaders\InstanceTestShaders\SkyBox.shader" />
+    <None Include="res\shaders\NormalTextureShaders\Light.shader" />
+    <None Include="res\shaders\NormalTextureShaders\Wall.shader" />
     <None Include="res\shaders\SkyBox.shader" />
     <None Include="res\shaders\DynamicVBO.shader" />
     <None Include="res\shaders\LightCube.shader" />
@@ -209,10 +213,12 @@
     <ClInclude Include="src\RenderBuffer.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\tests\BasicTest.h" />
     <ClInclude Include="src\tests\BlendingTest.h" />
     <ClInclude Include="src\tests\CameraTest.h" />
     <ClInclude Include="src\tests\FrameBufferTest.h" />
     <ClInclude Include="src\tests\InstanceTest.h" />
+    <ClInclude Include="src\tests\NormalTextureTest.h" />
     <ClInclude Include="src\tests\SkyBoxTest.h" />
     <ClInclude Include="src\tests\DynamicVBO.h" />
     <ClInclude Include="src\tests\LightingMaps.h" />

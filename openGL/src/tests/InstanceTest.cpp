@@ -89,24 +89,6 @@ namespace test
 
         Renderer render;
 
-        ////绘制天空盒
-        //{
-        //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        //    glEnable(GL_DEPTH_TEST); // 开启深度测试，保证3D物体遮挡关系
-        //    glDepthFunc(GL_LEQUAL);
-        //    glDepthMask(GL_FALSE);
-        //    m_SkyBoxShader->Bind();
-        //    m_SkyBoxTexture->Bind(0);
-        //    m_SkyBoxShader->SetUniform1i("u_Skybox", 0);
-        //    m_SkyBoxShader->SetUniformMat4f("u_Projection", m_proj);
-        //    glm::mat4 view = glm::mat4(glm::mat3(m_view));
-        //    m_SkyBoxShader->SetUniformMat4f("u_View", view);
-
-        //    render.Draw(*m_SkyBoxVAO, *m_SkyBoxEBO, *m_SkyBoxShader);
-        //    glDepthMask(GL_TRUE);
-        //    glDepthFunc(GL_LESS);
-        //}
-
         //绘制行星
         {
             m_NormalShader->Bind();
