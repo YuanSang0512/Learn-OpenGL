@@ -2,20 +2,24 @@
 #version 330 core
 
 layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 normal;
 layout (location = 2) in vec2 texCoord;
 
-out vec3 m_FragPos;
+out vec3 WorldPos;
 out vec2 m_TexCoord;
+out vec3 Normal;
 
 uniform mat4 u_Projection;
 uniform mat4 u_View;
 uniform mat4 u_Model;
+uniform mat3 u_NormalMatrix;
 
 void main()
 {
     gl_Position = u_Projection * u_View * u_Model * vec4(position, 1.0);
-    m_FragPos = vec3(u_Model * vec4(position, 1.0));
+    WorldPos = vec3(u_Model * vec4(position, 1.0));
     m_TexCoord = texCoord;
+    Normal = u_NormalMatrix * normal;
 }
 
 #shader fragment
@@ -40,24 +44,41 @@ uniform Light u_Light;
 
 uniform vec3 u_CamPos;
 
-in vec3 m_FragPos;
+in vec3 WorldPos;
 in vec2 m_TexCoord;
+in vec3 Normal;
+
+vec3 getNormalFromMap()
+{
+    vec3 tangentNormal = texture(u_Material.texture_normal1, m_TexCoord).xyz * 2.0 - 1.0;
+
+    vec3 Q1  = dFdx(WorldPos);
+    vec3 Q2  = dFdy(WorldPos);
+    vec2 st1 = dFdx(m_TexCoord);
+    vec2 st2 = dFdy(m_TexCoord);
+
+    vec3 N   = normalize(Normal);
+    vec3 T  = normalize(Q1*st2.t - Q2*st1.t);
+    vec3 B  = -normalize(cross(N, T));
+    mat3 TBN = mat3(T, B, N);
+
+    return normalize(TBN * tangentNormal);
+}
 
 void main()
 {
-    vec3 normalMap = texture(u_Material.texture_normal1, m_TexCoord).rgb;
-    normalMap = normalize(normalMap * 2.0 - 1.0); // 将法线从 [0,1] 映射到 [-1,1]
+    vec3 N = getNormalFromMap();
 
     vec3 color = texture(u_Material.texture_diffuse1, m_TexCoord).rgb;
     vec3 ambient = 0.1 * color;
-    vec3 lightDir = normalize(u_Light.lightPos - m_FragPos);
-    float diff = max(dot(lightDir, normalMap), 0.0);
+    vec3 lightDir = normalize(u_Light.lightPos - WorldPos);
+    float diff = max(dot(lightDir, N), 0.0);
     vec3 diffuse = diff * color;
 
-    vec3 viewDir = normalize(u_CamPos - m_FragPos);
-    vec3 reflectDir = reflect(-lightDir, normalMap);
+    vec3 viewDir = normalize(u_CamPos - WorldPos);
+    vec3 reflectDir = reflect(-lightDir, N);
     vec3 halfwayDir = normalize(lightDir + viewDir);  
-    float spec = pow(max(dot(normalMap, halfwayDir), 0.0), 32.0);
+    float spec = pow(max(dot(N, halfwayDir), 0.0), 32.0);
 
     vec3 specular = vec3(0.2) * spec;
     FragColor = vec4(ambient + diffuse + specular, 1.0);

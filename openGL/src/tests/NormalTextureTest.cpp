@@ -67,6 +67,8 @@ namespace test
             shader_wall->SetUniformMat4f("u_Projection", m_proj);
             shader_wall->SetUniformMat4f("u_View", m_view);
             shader_wall->SetUniformMat4f("u_Model", m_model_wall);
+            shader_wall->SetUniformMat3f("u_NormalMatrix", glm::mat3(glm::transpose(glm::inverse(glm::mat3(m_model_wall)))));
+
 
             ambientTex_wall->Bind(0);
             shader_wall->SetUniform1i("u_Material.texture_diffuse1", 0);

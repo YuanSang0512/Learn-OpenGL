@@ -110,8 +110,10 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0)
 void main()
 {		
     vec3 albedo     = pow(texture(albedoMap, TexCoords).rgb, vec3(2.2));
-    float metallic  = texture(metallicMap, TexCoords).r * metallicOverride;
-    float roughness = texture(roughnessMap, TexCoords).r * roughnessOverride;
+    // float metallic  = texture(metallicMap, TexCoords).r * metallicOverride;
+    // float roughness = texture(roughnessMap, TexCoords).r * roughnessOverride;    
+    float metallic  = metallicOverride;
+    float roughness = roughnessOverride;
     float ao        = texture(aoMap, TexCoords).r;
 
     vec3 N = getNormalFromMap();
