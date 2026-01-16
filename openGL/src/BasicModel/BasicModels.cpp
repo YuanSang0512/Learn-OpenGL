@@ -1,5 +1,15 @@
 ﻿#include "BasicModels.h"
 
+BasicModel::vec3 BasicModel::normalize(BasicModel::vec3& v) {
+    float length = std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+    if (length == 0.0f)
+        return v;
+    v.x /= length;
+    v.y /= length;
+    v.z /= length;
+    return v;
+}
+
 std::array<BasicModel::Vertex, 24> BasicModel::BasicModels::CreateCubeVertexs(float size)
 {
     std::array<Vertex, 24> vertices;
@@ -212,6 +222,70 @@ std::vector<unsigned int> BasicModel::BasicModels::CreatePlaneIndices()
 
     return indices;
 }
+
+std::vector<BasicModel::Vertex> BasicModel::BasicModels::CreateSphereVertices(
+    float radius, unsigned int xSegments, unsigned int ySegments)
+{
+    std::vector<BasicModel::Vertex> vertices;
+    vertices.reserve((xSegments + 1) * (ySegments + 1));
+
+    const float PI = 3.14159265359f;
+
+    for (unsigned int y = 0; y <= ySegments; ++y)
+    {
+        for (unsigned int x = 0; x <= xSegments; ++x)
+        {
+            float xSegment = static_cast<float>(x) / xSegments;
+            float ySegment = static_cast<float>(y) / ySegments;
+
+            float phi = xSegment * 2.0f * PI;      // 水平方向角度
+            float theta = ySegment * PI;           // 垂直方向角度
+
+            float xPos = std::cos(phi) * std::sin(theta);
+            float yPos = std::cos(theta);
+            float zPos = std::sin(phi) * std::sin(theta);
+
+            Vertex v;
+            vec3 unitPos = vec3(xPos, yPos, zPos); // 单位球
+            v.position = vec3(unitPos.x * radius, unitPos.y * radius, unitPos.z * radius);         // 放大到目标半径
+            v.normal = normalize(unitPos);         // 法线单位化
+            v.texCoord = vec2(xSegment, ySegment); // UV坐标
+            vertices.push_back(v);
+        }
+    }
+
+    return vertices;
+}
+
+std::vector<unsigned int> BasicModel::BasicModels::CreateSphereIndices(unsigned int xSegments, unsigned int ySegments)
+{
+    std::vector<unsigned int> indices;
+    indices.reserve(xSegments * ySegments * 6); // 每个网格 2 个三角形，每个三角形 3 个索引
+
+    for (unsigned int y = 0; y < ySegments; ++y)
+    {
+        for (unsigned int x = 0; x < xSegments; ++x)
+        {
+            unsigned int i0 = y * (xSegments + 1) + x;
+            unsigned int i1 = i0 + 1;
+            unsigned int i2 = i0 + (xSegments + 1);
+            unsigned int i3 = i2 + 1;
+
+            // 第一个三角形
+            indices.push_back(i0);
+            indices.push_back(i2);
+            indices.push_back(i1);
+
+            // 第二个三角形
+            indices.push_back(i1);
+            indices.push_back(i2);
+            indices.push_back(i3);
+        }
+    }
+
+    return indices;
+}
+
 
 std::vector<float> BasicModel::BasicModels::GetScrVertex()
 {

@@ -17,8 +17,6 @@ namespace test
         CameraInit();
 
         //BasicModel::BasicModels basicModels;
-
-        //¼ÓÔØShaderÎÄ¼ş
     }
 
     TestName::~TestName()

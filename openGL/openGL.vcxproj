@@ -158,6 +158,7 @@
     <ClCompile Include="src\tests\FrameBufferTest.cpp" />
     <ClCompile Include="src\tests\InstanceTest.cpp" />
     <ClCompile Include="src\tests\NormalTextureTest.cpp" />
+    <ClCompile Include="src\tests\PBRTest.cpp" />
     <ClCompile Include="src\tests\SkyBoxTest.cpp" />
     <ClCompile Include="src\tests\DynamicVBO.cpp" />
     <ClCompile Include="src\tests\LightingMaps.cpp" />
@@ -192,6 +193,8 @@
     <None Include="res\shaders\InstanceTestShaders\SkyBox.shader" />
     <None Include="res\shaders\NormalTextureShaders\Light.shader" />
     <None Include="res\shaders\NormalTextureShaders\Wall.shader" />
+    <None Include="res\shaders\PBRShaders\PBR.shader" />
+    <None Include="res\shaders\PBRShaders\Lights.shader" />
     <None Include="res\shaders\SkyBox.shader" />
     <None Include="res\shaders\DynamicVBO.shader" />
     <None Include="res\shaders\LightCube.shader" />
@@ -219,6 +222,7 @@
     <ClInclude Include="src\tests\FrameBufferTest.h" />
     <ClInclude Include="src\tests\InstanceTest.h" />
     <ClInclude Include="src\tests\NormalTextureTest.h" />
+    <ClInclude Include="src\tests\PBRTest.h" />
     <ClInclude Include="src\tests\SkyBoxTest.h" />
     <ClInclude Include="src\tests\DynamicVBO.h" />
     <ClInclude Include="src\tests\LightingMaps.h" />

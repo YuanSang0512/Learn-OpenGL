@@ -6,10 +6,16 @@
 namespace BasicModel {
     struct vec2 {
         float x, y;
+
+        vec2() : x(0), y(0) {}
+        vec2(float _x, float _y) : x(_x), y(_y) {}
     };
 
     struct vec3 {
         float x, y, z;
+
+        vec3() : x(0), y(0), z(0) {}
+        vec3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
     };
 
     struct vec4 {
@@ -31,6 +37,8 @@ namespace BasicModel {
         vec3 position;
     };
 
+    vec3 normalize(vec3& v);
+
     class BasicModels
     {
     public:
@@ -47,6 +55,9 @@ namespace BasicModel {
         std::vector<unsigned int> CreatePlaneIndices();
 
         //球体（坐标：法线：纹理坐标）
+        std::vector<BasicModel::Vertex> CreateSphereVertices(float radius, unsigned int xSegments, unsigned int ySegments);
+        std::vector<unsigned int> CreateSphereIndices(unsigned int xSegments, unsigned int ySegments);
+
 
         //屏幕平面（坐标：纹理坐标）
         std::vector<float> GetScrVertex();

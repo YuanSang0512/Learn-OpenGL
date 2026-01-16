@@ -126,6 +126,9 @@
     <ClCompile Include="src\tests\BasicTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\tests\PBRTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
@@ -148,6 +151,8 @@
     <None Include="res\shaders\InstanceTestShaders\SkyBox.shader" />
     <None Include="res\shaders\NormalTextureShaders\Wall.shader" />
     <None Include="res\shaders\NormalTextureShaders\Light.shader" />
+    <None Include="res\shaders\PBRShaders\PBR.shader" />
+    <None Include="res\shaders\PBRShaders\Lights.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -271,6 +276,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\tests\BasicTest.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tests\PBRTest.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

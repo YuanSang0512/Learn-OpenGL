@@ -14,7 +14,7 @@ private:
 	int m_Width, m_Height, m_BPP;
 	TextureType m_Type;
 public:
-	Texture(const std::string& path, TextureType type);
+	Texture(const std::string& path, TextureType type = TextureType::TEXTURE_2D);
 	~Texture();
 
 	void Bind(unsigned int slot = 0) const;

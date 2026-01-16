@@ -14,7 +14,13 @@ public:
 
 	void CameraUpdate(float deltaTime = 0.3f);
 
-	void SetCameraPos(glm::vec3 pos) { position = pos; }
+	void SetCameraPos(glm::vec3 pos) { 
+		position = pos; 
+	}
+
+	void SetMovementSpeed(float speed) {
+		movementSpeed = speed;
+	}
 
 	glm::mat4 GetViewMatrix() {
 		return glm::lookAt(position, position + front, up);
@@ -24,7 +30,9 @@ public:
 		return glm::perspective(glm::radians(zoom), aspect, nearPlane, farPlane);
 	}
 
-	glm::vec3 GetPosition() { return position; }
+	glm::vec3 GetPosition() { 
+		return position; 
+	}
 
 private:
 	glm::vec3 position;

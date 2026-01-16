@@ -177,8 +177,6 @@ namespace test
         m_FBO->Unbind();
         //绘制屏幕
         {
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             m_PassShader->Bind();
             m_FOBTexture->Bind(0);
             m_PassShader->SetUniform1i("screenTexture", 0);

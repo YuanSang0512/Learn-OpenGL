@@ -29,6 +29,7 @@ public:
 	void SetUniformVec4f(const std::string& name, const glm::vec4& vector4);
 	void SetUniformVec3f(const std::string& name, const glm::vec3& vector3);
 	void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
+	void SetUniformMat3f(const std::string& name, const glm::mat3& matrix);
 	void SetUniform1iv(const std::string& name, const int sz, const int* ind);
 private:
 	ShaderProgramSource ParseShader(const std::string& filePath);
